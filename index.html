@@ -44,7 +44,7 @@ body {
 }
 
 .card { max-width: 420px; }
-.admin-card { max-width: 800px; display: none; } /* Wider card for the admin table */
+.admin-card { max-width: 800px; display: none; }
 .login-card { max-width: 380px; display: none; }
 
 /* Top accent line */
@@ -61,10 +61,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.header {
-    padding: 40px 30px 20px;
-    text-align: center;
-}
+.header { padding: 40px 30px 20px; text-align: center; }
 
 /* Rich Brown Logo */
 .logo-wrapper {
@@ -82,121 +79,36 @@ body {
 }
 
 /* Headings */
-.header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    color: #4E342E; 
-    margin-bottom: 6px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-}
+.header h1 { font-family: 'Playfair Display', serif; font-size: 30px; color: #4E342E; margin-bottom: 6px; font-weight: 700; letter-spacing: -0.5px; }
+.header p { color: #E63946; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 700; }
 
-.header p {
-    color: #E63946;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    font-weight: 700;
-}
+.body { padding: 10px 32px 32px; }
+.welcome-text { text-align: center; color: #6D4C41; font-size: 15px; margin-bottom: 30px; line-height: 1.6; }
 
-.body {
-    padding: 10px 32px 32px;
-}
-
-.welcome-text {
-    text-align: center;
-    color: #6D4C41; 
-    font-size: 15px;
-    margin-bottom: 30px;
-    line-height: 1.6;
-}
-
-label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #8D6E63;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+label { display: block; font-size: 12px; font-weight: 600; color: #8D6E63; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 
 input {
-    width: 100%;
-    padding: 16px 18px;
-    border: 2px solid #F5E6E8;
-    border-radius: 14px;
-    font-size: 15px;
-    font-family: 'Inter', sans-serif;
-    color: #4E342E;
-    outline: none;
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    background: rgba(255, 253, 248, 0.9);
+    width: 100%; padding: 16px 18px; border: 2px solid #F5E6E8; border-radius: 14px;
+    font-size: 15px; font-family: 'Inter', sans-serif; color: #4E342E; outline: none;
+    transition: all 0.3s ease; margin-bottom: 20px; background: rgba(255, 253, 248, 0.9);
 }
-
-input:focus {
-    border-color: #FFD166;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.3);
-}
+input:focus { border-color: #FFD166; background: white; box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.3); }
 
 /* Bold Red Button */
 button {
-    width: 100%;
-    padding: 18px;
-    background: linear-gradient(135deg, #E63946, #C1121F);
-    color: #FFFDF8;
-    border: none;
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 12px 24px -8px rgba(230, 57, 70, 0.5);
+    width: 100%; padding: 18px; background: linear-gradient(135deg, #E63946, #C1121F); color: #FFFDF8;
+    border: none; border-radius: 14px; font-size: 15px; font-weight: 700; font-family: 'Inter', sans-serif;
+    cursor: pointer; transition: all 0.3s ease; box-shadow: 0 12px 24px -8px rgba(230, 57, 70, 0.5);
 }
-
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 32px -8px rgba(230, 57, 70, 0.6);
-}
-
-button:disabled {
-    background: #D7CCC8;
-    color: #FFFDF8;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
+button:hover { transform: translateY(-3px); box-shadow: 0 16px 32px -8px rgba(230, 57, 70, 0.6); }
+button:disabled { background: #D7CCC8; color: #FFFDF8; cursor: not-allowed; transform: none; box-shadow: none; }
 
 /* Admin Secondary Button */
-button.secondary {
-    background: #FFFDF8;
-    color: #4E342E;
-    border: 2px solid #D7CCC8;
-    box-shadow: none;
-    padding: 14px;
-    margin-top: 10px;
-}
-button.secondary:hover {
-    border-color: #E63946;
-    color: #E63946;
-}
+button.secondary { background: #FFFDF8; color: #4E342E; border: 2px solid #D7CCC8; box-shadow: none; padding: 14px; margin-top: 10px; }
+button.secondary:hover { border-color: #E63946; color: #E63946; transform: none; }
 
-.footer {
-    text-align: center;
-    padding: 0 30px 30px;
-    color: #8D6E63;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.footer a {
-    color: #E63946;
-    text-decoration: none;
-    font-weight: 700;
-}
+.footer { text-align: center; padding: 0 30px 30px; color: #8D6E63; font-size: 13px; font-weight: 500; }
+.footer a { color: #E63946; text-decoration: none; font-weight: 700; }
 
 /* Success State */
 #success { display: none; padding: 20px 30px 50px; text-align: center; }
@@ -209,48 +121,22 @@ button.secondary:hover {
 @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 /* ADMIN TABLE STYLES */
-.admin-header-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px 30px 20px;
-    border-bottom: 1px solid #F5E6E8;
-}
-.admin-header-flex h2 {
-    font-family: 'Playfair Display', serif;
-    color: #4E342E;
-    font-size: 24px;
-}
-.table-container {
-    padding: 0;
-    max-height: 500px;
-    overflow-y: auto;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-th {
-    background: #FFFDF8;
-    color: #8D6E63;
-    font-size: 12px;
-    text-transform: uppercase;
-    padding: 16px 30px;
-    position: sticky;
-    top: 0;
-    border-bottom: 2px solid #F5E6E8;
-}
-td {
-    padding: 16px 30px;
-    border-bottom: 1px solid #F5E6E8;
-    color: #4E342E;
-    font-size: 14px;
-}
+.admin-header-flex { display: flex; justify-content: space-between; align-items: center; padding: 30px 30px 20px; border-bottom: 1px solid #F5E6E8; flex-wrap: wrap; gap: 10px; }
+.admin-header-flex h2 { font-family: 'Playfair Display', serif; color: #4E342E; font-size: 24px; }
+.table-container { padding: 0; max-height: 400px; overflow-y: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th { background: #FFFDF8; color: #8D6E63; font-size: 12px; text-transform: uppercase; padding: 16px 30px; position: sticky; top: 0; border-bottom: 2px solid #F5E6E8; }
+td { padding: 16px 30px; border-bottom: 1px solid #F5E6E8; color: #4E342E; font-size: 14px; }
 tr:hover { background: #FFFDF8; }
 .date-col { color: #8D6E63; font-size: 12px; }
-.admin-actions { padding: 20px 30px; display: flex; gap: 10px; background: #FFFDF8; }
+.admin-actions { padding: 20px 30px; display: flex; gap: 10px; background: #FFFDF8; flex-wrap: wrap; }
 .error { background: #FFF0F0; color: #E63946; padding: 14px; border-radius: 12px; font-size: 13px; margin-bottom: 20px; display: none; }
+
+/* Password Change Section */
+#password-section { display: none; background: #FFFDF8; border-top: 2px solid #F5E6E8; padding: 30px; }
+.pass-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+.pass-grid > div { flex: 1; min-width: 200px; }
+#pass-msg { font-size: 13px; font-weight: 600; margin-top: 10px; text-align: center; }
 </style>
 </head>
 <body>
@@ -297,7 +183,7 @@ tr:hover { background: #FFFDF8; }
         <div id="admin-error" class="error"></div>
         <label>Admin Password</label>
         <input type="password" id="admin-pass" placeholder="Enter password...">
-        <button onclick="checkPassword()">Login to Dashboard</button>
+        <button id="login-btn" onclick="checkPassword()">Login to Dashboard</button>
         <button class="secondary" onclick="window.location.href='?'">Go Back</button>
     </div>
 </div>
@@ -308,6 +194,7 @@ tr:hover { background: #FFFDF8; }
         <h2>📋 Collected Leads (<span id="lead-count">0</span>)</h2>
         <button style="width: auto; padding: 10px 20px; font-size: 13px;" onclick="copyEmails()">📋 Copy Emails</button>
     </div>
+    
     <div class="table-container">
         <table>
             <thead>
@@ -322,15 +209,33 @@ tr:hover { background: #FFFDF8; }
             </tbody>
         </table>
     </div>
+    
     <div class="admin-actions">
-        <button class="secondary" onclick="window.location.href='?'">Logout</button>
+        <button class="secondary" style="flex: 1;" onclick="togglePasswordSection()">⚙️ Change Password</button>
+        <button class="secondary" style="flex: 1;" onclick="window.location.href='?'">🚪 Logout</button>
+    </div>
+
+    <!-- CHANGE PASSWORD SECTION -->
+    <div id="password-section">
+        <h3 style="color: #4E342E; margin-bottom: 15px; font-family: 'Playfair Display', serif;">Change Admin Password</h3>
+        <div class="pass-grid">
+            <div>
+                <label>New Password</label>
+                <input type="password" id="new-pass" placeholder="Enter new password">
+            </div>
+            <div>
+                <label>Confirm Password</label>
+                <input type="password" id="confirm-pass" placeholder="Repeat new password">
+            </div>
+        </div>
+        <button onclick="saveNewPassword()" style="padding: 14px;">Save New Password</button>
+        <div id="pass-msg"></div>
     </div>
 </div>
 
 <script>
 // --- CONFIGURATION ---
 const PDF_URL = 'https://attachments.convertkitcdnn2.com/362369/7f7307ea-2d63-4b9a-8012-50d9e613a6f5/kigali-cake-shop-0788211787-birthdays-cakes-prices.pdf';
-const ADMIN_PASSWORD = "kigaliadmin"; // Type this password to view the leads!
 
 const dbClient = window.supabase.createClient(
     'https://gwcoxztfhsemzqlxqyfx.supabase.co',
@@ -338,7 +243,6 @@ const dbClient = window.supabase.createClient(
 );
 
 // --- ROUTING LOGIC ---
-// Check if URL has ?admin=true
 document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('admin') === 'true') {
@@ -365,30 +269,43 @@ async function handleSubmit(e) {
     btn.disabled = true;
     document.getElementById('btn-text').textContent = 'Preparing menu...';
 
-    // Save to database
-    try {
-        await dbClient.from('leads').insert([{ name: fullName, email: email }]);
-    } catch (err) { console.error('Save error:', err); }
+    try { await dbClient.from('leads').insert([{ name: fullName, email: email }]); } catch (err) {}
 
-    // Format Name & Show Success
     const firstName = fullName.split(' ')[0];
     document.getElementById('display-name').textContent = firstName.charAt(0).toUpperCase() + firstName.slice(1);
     
     document.getElementById('form-section').style.display = 'none';
     document.getElementById('success').style.display = 'block';
     
-    // Auto Redirect
     setTimeout(() => { window.location.href = PDF_URL; }, 2500);
 }
 
 // --- ADMIN DASHBOARD LOGIC ---
 let loadedEmails = [];
 
-function checkPassword() {
+// Checks password against the database (falls back to "kigaliadmin" if db isn't set up yet)
+async function checkPassword() {
     const input = document.getElementById('admin-pass').value;
     const err = document.getElementById('admin-error');
+    const btn = document.getElementById('login-btn');
     
-    if(input === ADMIN_PASSWORD) {
+    btn.textContent = "Checking...";
+    btn.disabled = true;
+    err.style.display = "none";
+
+    let actualPassword = "kigaliadmin"; // Default fallback
+
+    try {
+        // Try to fetch the password from the config table
+        const { data, error } = await dbClient.from('config').select('value').eq('key', 'admin_password').single();
+        if (data && data.value) {
+            actualPassword = data.value;
+        }
+    } catch (e) {
+        // Table doesn't exist yet, we just rely on the fallback "kigaliadmin"
+    }
+
+    if(input === actualPassword) {
         document.getElementById('login-card').style.display = 'none';
         document.getElementById('admin-card').style.display = 'block';
         fetchLeads();
@@ -396,6 +313,9 @@ function checkPassword() {
         err.textContent = "Incorrect password.";
         err.style.display = "block";
     }
+
+    btn.textContent = "Login to Dashboard";
+    btn.disabled = false;
 }
 
 async function fetchLeads() {
@@ -415,7 +335,6 @@ async function fetchLeads() {
         }
 
         tbody.innerHTML = data.map(lead => {
-            // Format date nicely
             const date = new Date(lead.created_at).toLocaleDateString('en-US', {
                 month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
             });
@@ -434,18 +353,53 @@ async function fetchLeads() {
 }
 
 function copyEmails() {
-    if(loadedEmails.length === 0) {
-        alert("No emails to copy yet!");
-        return;
-    }
-    // Join emails with a comma and copy to clipboard
-    const emailString = loadedEmails.join(', ');
-    navigator.clipboard.writeText(emailString).then(() => {
+    if(loadedEmails.length === 0) { alert("No emails to copy yet!"); return; }
+    navigator.clipboard.writeText(loadedEmails.join(', ')).then(() => {
         alert(`Copied ${loadedEmails.length} emails to your clipboard!`);
-    }).catch(err => {
-        alert("Failed to copy. Please select them manually.");
-    });
+    }).catch(() => { alert("Failed to copy."); });
+}
+
+// --- CHANGE PASSWORD LOGIC ---
+function togglePasswordSection() {
+    const sec = document.getElementById('password-section');
+    sec.style.display = sec.style.display === 'block' ? 'none' : 'block';
+}
+
+async function saveNewPassword() {
+    const newPass = document.getElementById('new-pass').value;
+    const confirmPass = document.getElementById('confirm-pass').value;
+    const msg = document.getElementById('pass-msg');
+
+    if(newPass !== confirmPass) {
+        msg.style.color = "#E63946"; msg.textContent = "Passwords do not match."; return;
+    }
+    if(newPass.length < 5) {
+        msg.style.color = "#E63946"; msg.textContent = "Password must be at least 5 characters."; return;
+    }
+
+    msg.style.color = "#8D6E63"; msg.textContent = "Saving to database...";
+
+    try {
+        const { error } = await dbClient.from('config').update({ value: newPass }).eq('key', 'admin_password');
+        if (error) throw error;
+
+        msg.style.color = "green";
+        msg.textContent = "✅ Password changed successfully!";
+        
+        // Clear fields and hide section after 2 seconds
+        setTimeout(() => {
+            document.getElementById('new-pass').value = '';
+            document.getElementById('confirm-pass').value = '';
+            msg.textContent = '';
+            togglePasswordSection();
+        }, 2000);
+
+    } catch (err) {
+        msg.style.color = "#E63946";
+        msg.textContent = "Error saving. Did you run the SQL snippet in Supabase?";
+        console.error(err);
+    }
 }
 </script>
 </body>
-</html>
+</html> 
