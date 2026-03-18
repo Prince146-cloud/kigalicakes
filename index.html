@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Charming Atmosphere Background: Creamy Whites, Soft Pinks, Sunny Yellows */
+/* Charming Atmosphere Background */
 body {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
@@ -29,15 +28,14 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* Glassmorphism Card */
-.card {
+/* Glassmorphism Cards */
+.card, .admin-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 28px;
     box-shadow: 0 30px 60px -12px rgba(78, 52, 46, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-    max-width: 420px;
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -45,8 +43,12 @@ body {
     animation: floatIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Bold Red & Sunny Yellow top accent line */
-.card::before {
+.card { max-width: 420px; }
+.admin-card { max-width: 800px; display: none; } /* Wider card for the admin table */
+.login-card { max-width: 380px; display: none; }
+
+/* Top accent line */
+.card::before, .admin-card::before, .login-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -64,11 +66,11 @@ body {
     text-align: center;
 }
 
-/* Rich Brown Logo Wrapper for Indulgence */
+/* Rich Brown Logo */
 .logo-wrapper {
     width: 72px;
     height: 72px;
-    background: linear-gradient(135deg, #4E342E, #3E2723); /* Rich Browns */
+    background: linear-gradient(135deg, #4E342E, #3E2723);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -79,7 +81,7 @@ body {
     border: 4px solid #FFFDF8;
 }
 
-/* Rich Brown Headings */
+/* Headings */
 .header h1 {
     font-family: 'Playfair Display', serif;
     font-size: 30px;
@@ -89,7 +91,6 @@ body {
     letter-spacing: -0.5px;
 }
 
-/* Bold Red Subheading */
 .header p {
     color: #E63946;
     font-size: 11px;
@@ -104,11 +105,10 @@ body {
 
 .welcome-text {
     text-align: center;
-    color: #6D4C41; /* Warm Taupe/Brown */
+    color: #6D4C41; 
     font-size: 15px;
     margin-bottom: 30px;
     line-height: 1.6;
-    font-weight: 400;
 }
 
 label {
@@ -128,26 +128,20 @@ input {
     border-radius: 14px;
     font-size: 15px;
     font-family: 'Inter', sans-serif;
-    color: #4E342E; /* Rich Brown text */
+    color: #4E342E;
     outline: none;
     transition: all 0.3s ease;
     margin-bottom: 20px;
-    background: rgba(255, 253, 248, 0.9); /* Creamy white */
+    background: rgba(255, 253, 248, 0.9);
 }
 
-/* Sunny Yellow Glow on focus */
 input:focus {
     border-color: #FFD166;
     background: white;
     box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.3);
 }
 
-input::placeholder {
-    color: #D7CCC8;
-    font-weight: 400;
-}
-
-/* Bold Red Button for Energy */
+/* Bold Red Button */
 button {
     width: 100%;
     padding: 18px;
@@ -158,10 +152,8 @@ button {
     font-size: 15px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
-    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    margin-top: 10px;
+    transition: all 0.3s ease;
     box-shadow: 0 12px 24px -8px rgba(230, 57, 70, 0.5);
 }
 
@@ -170,16 +162,26 @@ button:hover {
     box-shadow: 0 16px 32px -8px rgba(230, 57, 70, 0.6);
 }
 
-button:active {
-    transform: translateY(1px);
-}
-
 button:disabled {
     background: #D7CCC8;
     color: #FFFDF8;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+}
+
+/* Admin Secondary Button */
+button.secondary {
+    background: #FFFDF8;
+    color: #4E342E;
+    border: 2px solid #D7CCC8;
+    box-shadow: none;
+    padding: 14px;
+    margin-top: 10px;
+}
+button.secondary:hover {
+    border-color: #E63946;
+    color: #E63946;
 }
 
 .footer {
@@ -194,194 +196,255 @@ button:disabled {
     color: #E63946;
     text-decoration: none;
     font-weight: 700;
-    transition: color 0.2s;
-}
-.footer a:hover { color: #C1121F; }
-
-/* Error Message */
-.error {
-    background: #FFF0F0;
-    color: #E63946;
-    padding: 14px 16px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 20px;
-    display: none;
-    border: 1px solid #FFCDD2;
 }
 
 /* Success State */
-@keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-#success {
-    display: none;
-    padding: 20px 30px 50px;
-    text-align: center;
-    animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.success-icon {
-    font-size: 50px;
-    margin-bottom: 16px;
-    animation: floatIn 1s ease-out;
-}
-
-#success h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 32px;
-    color: #4E342E;
-    margin-bottom: 12px;
-}
-
-#success p.msg {
-    color: #6D4C41;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
-
-.redirecting-box {
-    background: #FFFDF8; /* Creamy White */
-    border: 1px solid #FFE8A1; /* Sunny Yellow */
-    padding: 20px;
-    border-radius: 16px;
-    margin-bottom: 24px;
-    box-shadow: 0 10px 20px rgba(78, 52, 46, 0.05);
-}
-
-.redirecting-box p {
-    color: #E63946; /* Bold Red */
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.loader {
-    width: 28px;
-    height: 28px;
-    border: 3px solid #FFE8A1;
-    border-bottom-color: #E63946;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-}
+#success { display: none; padding: 20px 30px 50px; text-align: center; }
+.success-icon { font-size: 50px; margin-bottom: 16px; }
+#success h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: #4E342E; margin-bottom: 12px; }
+#success p.msg { color: #6D4C41; font-size: 16px; margin-bottom: 30px; }
+.redirecting-box { background: #FFFDF8; border: 1px solid #FFE8A1; padding: 20px; border-radius: 16px; margin-bottom: 24px; }
+.redirecting-box p { color: #E63946; font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.loader { width: 28px; height: 28px; border: 3px solid #FFE8A1; border-bottom-color: #E63946; border-radius: 50%; display: inline-block; animation: rotation 1s linear infinite; }
 @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-#success a.manual-link {
-    display: inline-block;
-    color: #8D6E63;
-    font-size: 13px;
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    transition: color 0.2s;
+/* ADMIN TABLE STYLES */
+.admin-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 20px;
+    border-bottom: 1px solid #F5E6E8;
 }
-#success a.manual-link:hover { color: #E63946; }
+.admin-header-flex h2 {
+    font-family: 'Playfair Display', serif;
+    color: #4E342E;
+    font-size: 24px;
+}
+.table-container {
+    padding: 0;
+    max-height: 500px;
+    overflow-y: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+th {
+    background: #FFFDF8;
+    color: #8D6E63;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 16px 30px;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid #F5E6E8;
+}
+td {
+    padding: 16px 30px;
+    border-bottom: 1px solid #F5E6E8;
+    color: #4E342E;
+    font-size: 14px;
+}
+tr:hover { background: #FFFDF8; }
+.date-col { color: #8D6E63; font-size: 12px; }
+.admin-actions { padding: 20px 30px; display: flex; gap: 10px; background: #FFFDF8; }
+.error { background: #FFF0F0; color: #E63946; padding: 14px; border-radius: 12px; font-size: 13px; margin-bottom: 20px; display: none; }
 </style>
 </head>
 <body>
 
-<div class="card">
-    <!-- Header -->
+<!-- 1. MAIN CLIENT FORM CARD -->
+<div class="card" id="main-card">
     <div class="header">
         <div class="logo-wrapper">🎂</div>
         <h1>Kigali Cakes Shop</h1>
         <p>Premium Artisan Bakery</p>
     </div>
 
-    <!-- FORM SECTION -->
     <div id="form-section">
         <div class="body">
             <p class="welcome-text">Welcome! Enter your details below to instantly receive our gorgeous cake catalog & prices.</p>
-            
             <div id="error" class="error"></div>
-            
-            <form id="lead-form" onsubmit="handleSubmit(event)">
-                <label for="name">Your Name</label>
+            <form onsubmit="handleSubmit(event)">
+                <label>Your Name</label>
                 <input type="text" id="name" placeholder="e.g. Jean Claude" required>
-                
-                <label for="email">Email Address</label>
+                <label>Email Address</label>
                 <input type="email" id="email" placeholder="your@email.com" required>
-                
-                <button type="submit" id="btn">
-                    <span id="btn-text">Open The Menu ✨</span>
-                </button>
+                <button type="submit" id="btn"><span id="btn-text">Open The Menu ✨</span></button>
             </form>
         </div>
-        <div class="footer">
-            Need a custom design? <a href="https://wa.me/250788211787" target="_blank">WhatsApp Us</a>
-        </div>
+        <div class="footer">Need a custom design? <a href="https://wa.me/250788211787" target="_blank">WhatsApp Us</a></div>
     </div>
 
-    <!-- SUCCESS SECTION (hidden initially) -->
     <div id="success">
         <div class="success-icon">🎉</div>
         <h2>Thank you, <br><span id="display-name" style="color: #E63946;">Guest</span>!</h2>
         <p class="msg">We are so excited to share our sweetest creations with you.</p>
-        
-        <div class="redirecting-box">
-            <p>Opening your catalog...</p>
-            <span class="loader"></span>
-        </div>
+        <div class="redirecting-box"><p>Opening your catalog...</p><span class="loader"></span></div>
+    </div>
+</div>
 
-        <a id="download-link" class="manual-link" href="#" target="_blank">Click here if it doesn't open automatically</a>
+<!-- 2. ADMIN LOGIN CARD (Hidden by default) -->
+<div class="login-card" id="login-card">
+    <div class="header">
+        <div class="logo-wrapper">🔒</div>
+        <h1>Admin Access</h1>
+        <p>Authorized Personnel Only</p>
+    </div>
+    <div class="body">
+        <div id="admin-error" class="error"></div>
+        <label>Admin Password</label>
+        <input type="password" id="admin-pass" placeholder="Enter password...">
+        <button onclick="checkPassword()">Login to Dashboard</button>
+        <button class="secondary" onclick="window.location.href='?'">Go Back</button>
+    </div>
+</div>
+
+<!-- 3. ADMIN DASHBOARD CARD (Hidden by default) -->
+<div class="admin-card" id="admin-card">
+    <div class="admin-header-flex">
+        <h2>📋 Collected Leads (<span id="lead-count">0</span>)</h2>
+        <button style="width: auto; padding: 10px 20px; font-size: 13px;" onclick="copyEmails()">📋 Copy Emails</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date Signed Up</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Data goes here -->
+            </tbody>
+        </table>
+    </div>
+    <div class="admin-actions">
+        <button class="secondary" onclick="window.location.href='?'">Logout</button>
     </div>
 </div>
 
 <script>
-// The PDF link
-const PDF_URL = 'https://attachments.convertkitcdnn2.com/362369/7f7307ea-2d63-4b9a-8012-50d9e613a6f5/kigali-cake-shop-0788211787-birthdays-cakes-prices.pdf?utm_campaign=Landing%20Page%20or%20Form%20-%202551518&utm_medium=email&utm_source=convertkit';
+// --- CONFIGURATION ---
+const PDF_URL = 'https://attachments.convertkitcdnn2.com/362369/7f7307ea-2d63-4b9a-8012-50d9e613a6f5/kigali-cake-shop-0788211787-birthdays-cakes-prices.pdf';
+const ADMIN_PASSWORD = "kigaliadmin"; // Type this password to view the leads!
 
-// Database connection
 const dbClient = window.supabase.createClient(
     'https://gwcoxztfhsemzqlxqyfx.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3Y294enRmaHNlbXpxbHhxeWZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MjUyOTcsImV4cCI6MjA4OTIwMTI5N30.okKGILHrCTXWx2TO17rpSWyfi-hN5uyPerLPchuDYTU'
 );
 
+// --- ROUTING LOGIC ---
+// Check if URL has ?admin=true
+document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === 'true') {
+        document.getElementById('main-card').style.display = 'none';
+        document.getElementById('login-card').style.display = 'block';
+    }
+});
+
+// --- NORMAL USER LOGIC ---
 async function handleSubmit(e) {
     e.preventDefault();
-
     const fullName = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const btn = document.getElementById('btn');
-    const btnText = document.getElementById('btn-text');
     const errorDiv = document.getElementById('error');
 
     errorDiv.style.display = 'none';
-
     if (!fullName || !email) {
-        errorDiv.textContent = 'Please fill in both your name and email.';
+        errorDiv.textContent = 'Please fill in all fields.';
         errorDiv.style.display = 'block';
         return;
     }
 
     btn.disabled = true;
-    btnText.textContent = 'Preparing your menu...';
+    document.getElementById('btn-text').textContent = 'Preparing menu...';
 
-    // 1. Save data to Supabase silently in background
+    // Save to database
     try {
         await dbClient.from('leads').insert([{ name: fullName, email: email }]);
-    } catch (err) {
-        console.error('Database save skipped:', err);
-    }
+    } catch (err) { console.error('Save error:', err); }
 
-    // 2. Format name to sound friendly (Get just the first name)
+    // Format Name & Show Success
     const firstName = fullName.split(' ')[0];
-    const formattedName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    document.getElementById('display-name').textContent = firstName.charAt(0).toUpperCase() + firstName.slice(1);
     
-    // Update the success text
-    document.getElementById('display-name').textContent = formattedName;
-    document.getElementById('download-link').href = PDF_URL;
-
-    // 3. Switch interface
     document.getElementById('form-section').style.display = 'none';
     document.getElementById('success').style.display = 'block';
     
-    // 4. Wait 2.5 seconds, then take them straight to the PDF
-    setTimeout(() => {
-        window.location.href = PDF_URL;
-    }, 2500);
+    // Auto Redirect
+    setTimeout(() => { window.location.href = PDF_URL; }, 2500);
+}
+
+// --- ADMIN DASHBOARD LOGIC ---
+let loadedEmails = [];
+
+function checkPassword() {
+    const input = document.getElementById('admin-pass').value;
+    const err = document.getElementById('admin-error');
+    
+    if(input === ADMIN_PASSWORD) {
+        document.getElementById('login-card').style.display = 'none';
+        document.getElementById('admin-card').style.display = 'block';
+        fetchLeads();
+    } else {
+        err.textContent = "Incorrect password.";
+        err.style.display = "block";
+    }
+}
+
+async function fetchLeads() {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">Loading data...</td></tr>';
+    
+    try {
+        const { data, error } = await dbClient.from('leads').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        
+        loadedEmails = data.map(lead => lead.email);
+        document.getElementById('lead-count').textContent = data.length;
+        
+        if(data.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No leads collected yet.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = data.map(lead => {
+            // Format date nicely
+            const date = new Date(lead.created_at).toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+            return `
+                <tr>
+                    <td><strong>${lead.name}</strong></td>
+                    <td><a href="mailto:${lead.email}" style="color:#E63946; text-decoration:none;">${lead.email}</a></td>
+                    <td class="date-col">${date}</td>
+                </tr>
+            `;
+        }).join('');
+
+    } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="3" style="color:red; text-align:center;">Failed to load data. Check console.</td></tr>';
+    }
+}
+
+function copyEmails() {
+    if(loadedEmails.length === 0) {
+        alert("No emails to copy yet!");
+        return;
+    }
+    // Join emails with a comma and copy to clipboard
+    const emailString = loadedEmails.join(', ');
+    navigator.clipboard.writeText(emailString).then(() => {
+        alert(`Copied ${loadedEmails.length} emails to your clipboard!`);
+    }).catch(err => {
+        alert("Failed to copy. Please select them manually.");
+    });
 }
 </script>
 </body>
