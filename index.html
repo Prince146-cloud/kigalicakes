@@ -1,819 +1,388 @@
+
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kigali Cakes Shop | Luxury Artisan Bakery by Didace</title>
-<meta name="description" content="Rwanda's most prestigious artisan bakery. Handcrafted luxury cakes for weddings, birthdays, and celebrations.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+<title>Kigali Cakes Shop | Exclusive Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script>
-tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],serif:['"Playfair Display"','serif'],display:['"Space Grotesk"','sans-serif']},colors:{brand:{50:'#fff0f3',100:'#ffe2e8',200:'#ffc9d6',300:'#ffa1b6',400:'#ff6d91',500:'#ff3a6e',600:'#ff0a55',700:'#d70046',800:'#b10040',900:'#93003c'},gold:{50:'#fdf8ef',100:'#f9edcf',200:'#f2d99e',300:'#eac06c',400:'#e3a83e',500:'#d4922a',600:'#bc7520',700:'#9b571c',800:'#80461e',900:'#6b3b1c'},cream:{50:'#FFFDF8',100:'#FFF9EE',200:'#FFF3DD',300:'#FFECC8'}}}}}
-</script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-::selection{background:rgba(255,58,110,.2);color:#93003c}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#FFFDF8;color:#1a1a1a;overflow-x:hidden}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ═══ CUSTOM CURSOR ═══ */
-.cur,.cur-dot{position:fixed;pointer-events:none;z-index:999999;border-radius:50%;transition:width .2s,height .2s,background .2s}
-.cur{width:36px;height:36px;border:1.5px solid rgba(255,58,110,.5);transform:translate(-50%,-50%);mix-blend-mode:difference}
-.cur-dot{width:6px;height:6px;background:#ff3a6e;transform:translate(-50%,-50%)}
-.cur.big{width:60px;height:60px;background:rgba(255,58,110,.08);border-color:rgba(255,58,110,.3)}
-@media(max-width:768px){.cur,.cur-dot{display:none}}
-
-/* ═══ SCROLLBAR ═══ */
-::-webkit-scrollbar{width:7px}
-::-webkit-scrollbar-track{background:#FFF9EE}
-::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ff3a6e,#ff6d91);border-radius:10px}
-::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#d70046,#ff3a6e)}
-
-/* ═══ PRELOADER ═══ */
-#preloader{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden}
-#preloader .bg-layer{position:absolute;inset:0;background:#0a0a0a}
-.pl-cake{position:relative;width:80px;height:90px}
-.pl-tier{position:absolute;left:50%;transform:translateX(-50%);border-radius:6px}
-.pl-t1{width:60px;height:20px;bottom:0;background:linear-gradient(135deg,#ff3a6e,#ff6d91);animation:plb .5s ease-in-out infinite alternate}
-.pl-t2{width:44px;height:18px;bottom:22px;background:linear-gradient(135deg,#ff6d91,#ffa1b6);animation:plb .5s ease-in-out infinite alternate .08s}
-.pl-t3{width:28px;height:16px;bottom:42px;background:linear-gradient(135deg,#ffa1b6,#ffc9d6);animation:plb .5s ease-in-out infinite alternate .16s}
-.pl-cherry{width:12px;height:12px;background:#d70046;border-radius:50%;position:absolute;left:50%;transform:translateX(-50%);bottom:60px;animation:plb .5s ease-in-out infinite alternate .24s}
-.pl-cherry::after{content:'';position:absolute;width:2px;height:10px;background:#16a34a;left:50%;transform:translateX(-50%);bottom:11px;border-radius:2px}
-@keyframes plb{to{transform:translateX(-50%) translateY(-4px)}}
-.pl-bar-wrap{width:160px;height:2px;background:rgba(255,255,255,.08);border-radius:10px;margin-top:28px;overflow:hidden}
-.pl-bar{height:100%;width:0%;background:linear-gradient(90deg,#ff3a6e,#ff6d91);border-radius:10px;transition:width .15s}
-#preloader.out .bg-layer{transition:transform .8s cubic-bezier(.77,0,.18,1);transform:translateY(-100%)}
-#preloader.out{pointer-events:none}
-
-/* ═══ PROGRESS BAR ═══ */
-#scroll-prog{position:fixed;top:0;left:0;height:3px;z-index:99998;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#ff3a6e,#e3a83e,#ff3a6e);background-size:200% 100%;animation:gx 3s linear infinite}
-@keyframes gx{to{background-position:200% 0}}
-
-/* ═══ GLASS ═══ */
-.glass{background:rgba(255,253,248,.78);backdrop-filter:blur(22px) saturate(1.6);-webkit-backdrop-filter:blur(22px) saturate(1.6);border:1px solid rgba(255,255,255,.5)}
-.glass-d{background:rgba(10,10,10,.55);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.08)}
-
-/* ═══ GRADIENT TEXT ═══ */
-.gt{background:linear-gradient(135deg,#ff3a6e 0%,#e3a83e 50%,#ff3a6e 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gx 4s linear infinite}
-
-/* ═══ MARQUEE ═══ */
-.mq{overflow:hidden;white-space:nowrap}.mq-i{display:inline-flex;animation:mqx 40s linear infinite}
-@keyframes mqx{to{transform:translateX(-50%)}}
-
-/* ═══ FLOAT ═══ */
-@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
-.fl{animation:fl 6s ease-in-out infinite}
-.fl-s{animation:fl 8s ease-in-out infinite}
-.fl-f{animation:fl 4s ease-in-out infinite}
-
-/* ═══ ARCH ═══ */
-.arch{border-radius:260px 260px 16px 16px}
-
-/* ═══ CARDS ═══ */
-.ck{transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s ease}
-.ck:hover{transform:translateY(-12px);box-shadow:0 30px 60px -20px rgba(255,58,110,.15)}
-
-/* ═══ SHIMMER ═══ */
-.shm{position:relative;overflow:hidden}
-.shm::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-100%);animation:shm 2.5s infinite}
-@keyframes shm{to{transform:translateX(100%)}}
-
-/* ═══ SKELETON ═══ */
-.sk{background:linear-gradient(90deg,#f5f2ee 25%,#ece8e2 50%,#f5f2ee 75%);background-size:200% 100%;animation:ska 1.4s ease infinite}
-@keyframes ska{to{background-position:-200% 0}}
-
-/* ═══ REVEAL ═══ */
-.rv{opacity:0;transform:translateY(55px)}
-.rv-l{opacity:0;transform:translateX(-55px)}
-.rv-r{opacity:0;transform:translateX(55px)}
-.rv-s{opacity:0;transform:scale(.88)}
-
-/* ═══ GLOW BTN ═══ */
-.glow{position:relative;overflow:hidden;transition:box-shadow .3s,transform .3s}
-.glow::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent 60%);opacity:0;transition:opacity .3s}
-.glow:hover::before{opacity:1}
-.glow:hover{box-shadow:0 12px 35px -8px rgba(255,58,110,.45);transform:translateY(-2px)}
-
-/* ═══ MAGNETIC ═══ */
-.mag{transition:transform .35s cubic-bezier(.22,1,.36,1)}
-
-/* ═══ BLOB ═══ */
-@keyframes blob{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}}
-.blob{animation:blob 8s ease-in-out infinite}
-
-/* ═══ MODAL ═══ */
-.m-bg{background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.m-box{transform:scale(.9) translateY(20px);opacity:0;transition:all .4s cubic-bezier(.22,1,.36,1)}
-.m-box.on{transform:scale(1) translateY(0);opacity:1}
-
-/* ═══ TOAST ═══ */
-.t-in{animation:ti .4s cubic-bezier(.22,1,.36,1) forwards}
-.t-out{animation:to .3s ease forwards}
-@keyframes ti{from{transform:translateX(120%) scale(.9);opacity:0}to{transform:translateX(0) scale(1);opacity:1}}
-@keyframes to{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(120%)}}
-
-/* ═══ INPUT ═══ */
-.fi{width:100%;padding:13px 16px;border:1.5px solid #e7e5e4;border-radius:14px;background:white;font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
-.fi:focus{border-color:#ff3a6e;box-shadow:0 0 0 3px rgba(255,58,110,.1)}
-select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-textarea.fi{resize:vertical;min-height:72px}
-
-/* ═══ ADMIN TABLE ═══ */
-.at td,.at th{padding:14px 16px;text-align:left;font-size:13px}
-.at th{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9ca3af;background:#fafaf9;font-weight:800}
-.at tbody tr{border-bottom:1px solid #f5f5f4;transition:background .15s}
-.at tbody tr:hover{background:#fff0f3}
-
-/* ═══ ADMIN SIDEBAR ═══ */
-.sb-link{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:12px;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);transition:all .2s;cursor:pointer;width:100%;text-align:left;border:none;background:none}
-.sb-link:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
-.sb-link.on{background:rgba(255,58,110,.15);color:#ff6d91;font-weight:600}
-
-/* ═══ RESPONSIVE ADMIN ═══ */
-@media(max-width:1023px){
-.admin-sb{transform:translateX(-100%);position:fixed;z-index:9998}
-.admin-sb.open{transform:translateX(0)}
-.admin-mn{margin-left:0!important}
+/* Charming Atmosphere Background: Creamy Whites, Soft Pinks, Sunny Yellows */
+body {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(-45deg, #FFFDF8, #FFE8A1, #FFE3E8, #FFFDF8);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
 }
 
-/* ═══ COUNTER ═══ */
-.cnt{font-variant-numeric:tabular-nums}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-/* ═══ PARALLAX ═══ */
-.prx{will-change:transform}
+/* Glassmorphism Card */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 28px;
+    box-shadow: 0 30px 60px -12px rgba(78, 52, 46, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    max-width: 420px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    transform: translateY(0);
+    animation: floatIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
 
-/* ═══ SECTION DIVIDER ═══ */
-.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,58,110,.2),rgba(227,168,62,.2),transparent)}
+/* Bold Red & Sunny Yellow top accent line */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #FFE8A1, #E63946, #FFE8A1);
+}
+
+@keyframes floatIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+    padding: 40px 30px 20px;
+    text-align: center;
+}
+
+/* Rich Brown Logo Wrapper for Indulgence */
+.logo-wrapper {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #4E342E, #3E2723); /* Rich Browns */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 32px;
+    box-shadow: 0 10px 25px rgba(78, 52, 46, 0.25);
+    border: 4px solid #FFFDF8;
+}
+
+/* Rich Brown Headings */
+.header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: #4E342E; 
+    margin-bottom: 6px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Bold Red Subheading */
+.header p {
+    color: #E63946;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+}
+
+.body {
+    padding: 10px 32px 32px;
+}
+
+.welcome-text {
+    text-align: center;
+    color: #6D4C41; /* Warm Taupe/Brown */
+    font-size: 15px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #8D6E63;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input {
+    width: 100%;
+    padding: 16px 18px;
+    border: 2px solid #F5E6E8;
+    border-radius: 14px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: #4E342E; /* Rich Brown text */
+    outline: none;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    background: rgba(255, 253, 248, 0.9); /* Creamy white */
+}
+
+/* Sunny Yellow Glow on focus */
+input:focus {
+    border-color: #FFD166;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.3);
+}
+
+input::placeholder {
+    color: #D7CCC8;
+    font-weight: 400;
+}
+
+/* Bold Red Button for Energy */
+button {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #E63946, #C1121F);
+    color: #FFFDF8;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-top: 10px;
+    box-shadow: 0 12px 24px -8px rgba(230, 57, 70, 0.5);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -8px rgba(230, 57, 70, 0.6);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background: #D7CCC8;
+    color: #FFFDF8;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.footer {
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #8D6E63;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.footer a {
+    color: #E63946;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+.footer a:hover { color: #C1121F; }
+
+/* Error Message */
+.error {
+    background: #FFF0F0;
+    color: #E63946;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: none;
+    border: 1px solid #FFCDD2;
+}
+
+/* Success State */
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+#success {
+    display: none;
+    padding: 20px 30px 50px;
+    text-align: center;
+    animation: fadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.success-icon {
+    font-size: 50px;
+    margin-bottom: 16px;
+    animation: floatIn 1s ease-out;
+}
+
+#success h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #4E342E;
+    margin-bottom: 12px;
+}
+
+#success p.msg {
+    color: #6D4C41;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.redirecting-box {
+    background: #FFFDF8; /* Creamy White */
+    border: 1px solid #FFE8A1; /* Sunny Yellow */
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 10px 20px rgba(78, 52, 46, 0.05);
+}
+
+.redirecting-box p {
+    color: #E63946; /* Bold Red */
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.loader {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #FFE8A1;
+    border-bottom-color: #E63946;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+#success a.manual-link {
+    display: inline-block;
+    color: #8D6E63;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s;
+}
+#success a.manual-link:hover { color: #E63946; }
 </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
-<div class="cur" id="cur"></div>
-<div class="cur-dot" id="curd"></div>
-
-<!-- Preloader -->
-<div id="preloader">
-<div class="bg-layer"></div>
-<div class="pl-cake" style="position:relative;z-index:2">
-    <div class="pl-cherry"></div>
-    <div class="pl-tier pl-t3"></div>
-    <div class="pl-tier pl-t2"></div>
-    <div class="pl-tier pl-t1"></div>
-</div>
-<p class="text-white font-serif text-lg mt-5 tracking-wide relative z-[2]">Kigali Cakes</p>
-<p class="text-neutral-500 text-[10px] mt-1.5 tracking-[.25em] uppercase relative z-[2]">Loading experience</p>
-<div class="pl-bar-wrap relative z-[2]"><div class="pl-bar" id="pl-bar"></div></div>
-</div>
-
-<!-- Scroll Progress -->
-<div id="scroll-prog"></div>
-
-<!-- Toasts -->
-<div id="toasts" class="fixed top-5 right-5 z-[99999] flex flex-col gap-3 pointer-events-none" style="max-width:360px;width:100%"></div>
-
-<!-- ═══════════ PARTICLES CANVAS ═══════════ -->
-<canvas id="ptc" class="fixed inset-0 pointer-events-none z-[1]"></canvas>
-
-<!-- ═══════════════════════════════════════ -->
-<!--           PUBLIC WEBSITE               -->
-<!-- ═══════════════════════════════════════ -->
-<div id="site" class="relative z-[2]">
-
-<!-- Announcement -->
-<div class="bg-gradient-to-r from-brand-700 via-brand-500 to-gold-500 text-white py-2.5 relative z-50">
-<div class="mq"><div class="mq-i">
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Kigali's Most Prestigious Bakery</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="award" class="w-3.5 h-3.5"></i>Award-Winning Artisan Cakes</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="truck" class="w-3.5 h-3.5"></i>Same-Day Delivery</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="heart" class="w-3.5 h-3.5"></i>Crafted with Love</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Kigali's Most Prestigious Bakery</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="award" class="w-3.5 h-3.5"></i>Award-Winning Artisan Cakes</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="truck" class="w-3.5 h-3.5"></i>Same-Day Delivery</span>
-<span class="mx-10 flex items-center gap-2 text-[13px] font-medium"><i data-lucide="heart" class="w-3.5 h-3.5"></i>Crafted with Love</span>
-</div></div>
-</div>
-
-<!-- Navbar -->
-<nav id="nav" class="fixed w-full z-50 transition-all duration-500">
-<div class="max-w-7xl mx-auto px-5 lg:px-8">
-<div class="flex items-center justify-between h-[76px]">
-<a href="#hero" class="flex items-center gap-2.5 group cur-h">
-    <div class="relative">
-        <div class="absolute inset-0 bg-brand-500 rounded-full blur-lg opacity-40 group-hover:opacity-70 transition-opacity duration-300"></div>
-        <div class="relative bg-white p-2.5 rounded-full shadow-lg transition-transform duration-300 group-hover:scale-110"><i data-lucide="cake" class="w-6 h-6 text-brand-500"></i></div>
+<div class="card">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-wrapper">🎂</div>
+        <h1>Kigali Cakes Shop</h1>
+        <p>Premium Artisan Bakery</p>
     </div>
-    <div>
-        <span class="text-[22px] font-serif font-bold text-neutral-900 block leading-none">Kigali Cakes</span>
-        <span class="text-[8px] text-brand-500 font-bold tracking-[.28em] uppercase mt-0.5 block">Artisan Bakery</span>
-    </div>
-</a>
-<div class="hidden lg:flex items-center gap-1">
-    <a href="#hero" class="cur-h px-4 py-2 rounded-full text-[13px] font-semibold text-neutral-500 hover:text-brand-500 hover:bg-brand-50 transition-all">Home</a>
-    <a href="#menu" class="cur-h px-4 py-2 rounded-full text-[13px] font-semibold text-neutral-500 hover:text-brand-500 hover:bg-brand-50 transition-all">Collection</a>
-    <a href="#process" class="cur-h px-4 py-2 rounded-full text-[13px] font-semibold text-neutral-500 hover:text-brand-500 hover:bg-brand-50 transition-all">Process</a>
-    <a href="#about" class="cur-h px-4 py-2 rounded-full text-[13px] font-semibold text-neutral-500 hover:text-brand-500 hover:bg-brand-50 transition-all">About</a>
-    <a href="#reviews" class="cur-h px-4 py-2 rounded-full text-[13px] font-semibold text-neutral-500 hover:text-brand-500 hover:bg-brand-50 transition-all">Reviews</a>
-    <div class="w-px h-5 bg-neutral-200 mx-3"></div>
-    <a href="tel:+250788211787" class="cur-h flex items-center gap-1.5 text-[13px] font-medium text-neutral-400 hover:text-brand-500 transition-colors"><i data-lucide="phone" class="w-3.5 h-3.5"></i><span class="hidden xl:inline">0788 211 787</span></a>
-    <button onclick="waOrder('a custom cake')" class="cur-h mag glow ml-3 bg-neutral-900 text-white px-6 py-3 rounded-full text-[13px] font-bold hover:bg-brand-600 transition-colors shadow-lg flex items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i>Order Now</button>
-    <button onclick="openLogin()" class="cur-h ml-1.5 p-2.5 rounded-full text-neutral-300 hover:text-brand-500 hover:bg-brand-50 transition-all" title="Admin"><i data-lucide="settings" class="w-4 h-4"></i></button>
-</div>
-<button id="ham-btn" class="lg:hidden w-11 h-11 rounded-full bg-white shadow-md flex items-center justify-center z-50 cur-h">
-    <span id="ham" class="flex flex-col gap-[5px]">
-        <span class="block w-5 h-[2px] bg-neutral-800 transition-all duration-300 origin-center"></span>
-        <span class="block w-5 h-[2px] bg-neutral-800 transition-all duration-300"></span>
-        <span class="block w-5 h-[2px] bg-neutral-800 transition-all duration-300 origin-center"></span>
-    </span>
-</button>
-</div>
-</div>
-<!-- Mobile Menu -->
-<div id="mob" class="fixed inset-0 bg-white/[.97] backdrop-blur-2xl z-40 flex flex-col items-center justify-center gap-6 transition-all duration-500 translate-x-full lg:hidden">
-    <a href="#hero" class="mob-l text-3xl font-serif font-bold text-neutral-900 hover:text-brand-500 transition-colors">Home</a>
-    <a href="#menu" class="mob-l text-3xl font-serif font-bold text-neutral-900 hover:text-brand-500 transition-colors">Collection</a>
-    <a href="#process" class="mob-l text-3xl font-serif font-bold text-neutral-900 hover:text-brand-500 transition-colors">Process</a>
-    <a href="#about" class="mob-l text-3xl font-serif font-bold text-neutral-900 hover:text-brand-500 transition-colors">About</a>
-    <a href="#reviews" class="mob-l text-3xl font-serif font-bold text-neutral-900 hover:text-brand-500 transition-colors">Reviews</a>
-    <button onclick="waOrder('a custom cake')" class="mt-5 glow bg-gradient-to-r from-brand-500 to-gold-500 text-white px-9 py-4 rounded-full text-sm font-bold tracking-wider uppercase shadow-xl flex items-center gap-2"><i data-lucide="message-circle" class="w-5 h-5"></i>WhatsApp Order</button>
-    <button onclick="openLogin()" class="text-neutral-400 hover:text-brand-500 flex items-center gap-2 mt-3 text-sm"><i data-lucide="settings" class="w-4 h-4"></i>Admin Panel</button>
-</div>
-</nav>
 
-<!-- ═══ HERO ═══ -->
-<section id="hero" class="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
-<div class="absolute top-20 -right-40 w-[600px] h-[600px] bg-brand-200/25 rounded-full blur-[100px] pointer-events-none blob"></div>
-<div class="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-gold-200/30 rounded-full blur-[100px] pointer-events-none blob" style="animation-delay:-4s"></div>
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-gradient-radial from-white/40 to-transparent rounded-full pointer-events-none"></div>
-<!-- Floating deco -->
-<div class="absolute top-36 left-[8%] fl-s opacity-20 pointer-events-none"><svg width="50" height="50" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#ff3a6e" stroke-width="1.5" stroke-dasharray="3 3"/></svg></div>
-<div class="absolute top-[55%] left-[4%] fl opacity-15 pointer-events-none"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><rect x="2" y="2" width="26" height="26" stroke="#e3a83e" stroke-width="1.5" transform="rotate(45 15 15)"/></svg></div>
-<div class="absolute top-[22%] right-[12%] fl-f opacity-25 pointer-events-none"><i data-lucide="heart" class="w-7 h-7 text-brand-300 fill-brand-300"></i></div>
-<div class="absolute bottom-[25%] right-[6%] fl opacity-20 pointer-events-none"><i data-lucide="sparkles" class="w-8 h-8 text-gold-400"></i></div>
-
-<div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10 w-full">
-<div class="flex flex-col-reverse lg:flex-row items-center gap-14 lg:gap-20">
-<div class="w-full lg:w-1/2 text-center lg:text-left">
-    <div class="rv inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/80 border border-brand-100 text-brand-600 text-[11px] font-bold tracking-[.2em] uppercase mb-7 shadow-lg"><span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>Est. 2018 · Downtown Kigali</div>
-    <h2 class="rv font-serif font-bold text-neutral-900 leading-[1.06] mb-7" style="font-size:clamp(2.6rem,6vw,5.5rem)">
-        Where<br><span class="gt italic">Artistry</span><br>Meets Flavor
-    </h2>
-    <p class="rv text-[17px] text-neutral-500 mb-10 max-w-lg mx-auto lg:mx-0 font-light leading-relaxed">
-        Rwanda's most exquisite bakery. We sculpt your sweetest dreams into breathtaking edible masterpieces.
-    </p>
-    <div class="rv flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-        <a href="#menu" class="cur-h mag glow inline-flex justify-center items-center gap-2 px-9 py-[18px] bg-neutral-900 text-white text-[13px] font-bold tracking-wider uppercase rounded-full shadow-xl">Explore Menu <i data-lucide="arrow-down" class="w-4 h-4"></i></a>
-        <button onclick="waOrder('a custom cake')" class="cur-h mag inline-flex justify-center items-center gap-2 px-9 py-[18px] bg-white text-neutral-800 border-2 border-neutral-200 text-[13px] font-bold tracking-wider uppercase rounded-full hover:border-brand-500 hover:text-brand-500 transition-all shadow"><i data-lucide="sparkles" class="w-4 h-4"></i>Custom Design</button>
-    </div>
-    <div class="rv mt-14 flex flex-wrap justify-center lg:justify-start gap-6 items-center text-sm text-neutral-500">
-        <span class="flex items-center gap-2 font-medium"><span class="flex -space-x-1.5"><span class="w-7 h-7 rounded-full bg-brand-400 border-2 border-white flex items-center justify-center text-white text-[10px] font-bold">★</span><span class="w-7 h-7 rounded-full bg-gold-400 border-2 border-white flex items-center justify-center text-white text-[10px] font-bold">5</span></span>500+ Happy Customers</span>
-        <span class="hidden sm:block w-px h-5 bg-neutral-200"></span>
-        <span class="flex items-center gap-1.5 font-medium"><i data-lucide="badge-check" class="w-4 h-4 text-emerald-500"></i>Premium Quality</span>
-    </div>
-</div>
-<div class="w-full lg:w-1/2 rv-s">
-    <div class="relative max-w-md mx-auto">
-        <div class="absolute inset-0 border-2 border-brand-200/30 arch translate-x-5 translate-y-5 -z-10"></div>
-        <div class="absolute inset-0 border border-gold-200/20 arch translate-x-10 translate-y-10 -z-20"></div>
-        <div class="relative arch overflow-hidden shadow-2xl bg-white p-2.5 fl group">
-            <div class="arch overflow-hidden"><img id="hero-img" src="https://i.imgur.com/ciV7QDf.png" alt="Featured Cake" class="w-full arch object-cover transition-transform duration-700 group-hover:scale-105" style="aspect-ratio:4/5"></div>
-            <div class="absolute -top-3 -right-3 lg:-right-8 glass p-3.5 rounded-xl shadow-lg flex items-center gap-2.5 z-20">
-                <div class="bg-gradient-to-br from-brand-500 to-gold-500 text-white p-2 rounded-lg"><i data-lucide="award" class="w-4 h-4"></i></div>
-                <div><p class="text-[9px] text-neutral-400 font-bold tracking-wider uppercase">#1 in Rwanda</p><p class="text-neutral-900 font-bold text-sm">Best Cakes</p></div>
-            </div>
-            <div class="absolute bottom-10 -left-3 lg:-left-10 glass p-3.5 rounded-xl shadow-lg flex items-center gap-3 z-20">
-                <div class="bg-neutral-900 text-white p-2.5 rounded-full"><i data-lucide="heart" class="w-4 h-4 fill-white"></i></div>
-                <div><p class="text-[9px] text-neutral-400 font-bold tracking-wider uppercase">Made with</p><p class="text-neutral-900 font-serif font-bold">Pure Love</p></div>
-            </div>
+    <!-- FORM SECTION -->
+    <div id="form-section">
+        <div class="body">
+            <p class="welcome-text">Welcome! Enter your details below to instantly receive our gorgeous cake catalog & prices.</p>
+            
+            <div id="error" class="error"></div>
+            
+            <form id="lead-form" onsubmit="handleSubmit(event)">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" placeholder="e.g. Jean Claude" required>
+                
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="your@email.com" required>
+                
+                <button type="submit" id="btn">
+                    <span id="btn-text">Open The Menu ✨</span>
+                </button>
+            </form>
+        </div>
+        <div class="footer">
+            Need a custom design? <a href="https://wa.me/250788211787" target="_blank">WhatsApp Us</a>
         </div>
     </div>
-</div>
-</div>
-</div>
-<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-    <span class="text-[9px] font-bold tracking-[.2em] uppercase text-neutral-400">Scroll</span>
-    <div class="w-5 h-8 border-2 border-neutral-300 rounded-full flex justify-center pt-1.5"><div class="w-1 h-2.5 bg-brand-500 rounded-full animate-bounce"></div></div>
-</div>
-</section>
 
-<!-- ═══ STATS ═══ -->
-<section class="py-14 relative"><div class="absolute inset-0 bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900"></div>
-<div class="max-w-6xl mx-auto px-5 lg:px-8 relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-    <div class="rv"><div class="text-4xl md:text-5xl font-serif font-bold text-white mb-1 cnt" data-to="500">0</div><p class="text-neutral-400 text-[10px] font-semibold tracking-[.15em] uppercase">Happy Clients</p></div>
-    <div class="rv"><div class="text-4xl md:text-5xl font-serif font-bold text-white mb-1 cnt" id="st-count" data-to="7">0</div><p class="text-neutral-400 text-[10px] font-semibold tracking-[.15em] uppercase">Cake Designs</p></div>
-    <div class="rv"><div class="text-4xl md:text-5xl font-serif font-bold text-white mb-1 cnt" data-to="7">0</div><p class="text-neutral-400 text-[10px] font-semibold tracking-[.15em] uppercase">Years Expert</p></div>
-    <div class="rv"><div class="text-4xl md:text-5xl font-serif font-bold gt mb-1">100%</div><p class="text-neutral-400 text-[10px] font-semibold tracking-[.15em] uppercase">Satisfaction</p></div>
-</div>
-</section>
-
-<!-- ═══ COLLECTION ═══ -->
-<section id="menu" class="py-28 relative overflow-hidden">
-<div class="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
-<div class="text-center max-w-2xl mx-auto mb-16">
-    <div class="rv inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 text-brand-600 text-[11px] font-bold tracking-[.2em] uppercase mb-5"><i data-lucide="crown" class="w-3.5 h-3.5"></i>Signature Collection</div>
-    <h2 class="rv text-4xl md:text-[3.2rem] font-serif font-bold text-neutral-900 mb-5 leading-tight">Masterpieces That<br><span class="gt italic">Inspire Wonder</span></h2>
-    <div class="rv w-20 h-[3px] bg-gradient-to-r from-brand-500 to-gold-500 mx-auto rounded-full mb-6"></div>
-    <p class="rv text-neutral-500 leading-relaxed">Each cake is a unique work of art by Master Baker Didace. Tap any to order via WhatsApp.</p>
-</div>
-<div class="rv flex flex-wrap justify-center gap-2.5 mb-14" id="fbar"></div>
-<div id="sk-g" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-    <div class="bg-white rounded-3xl p-4 shadow-sm"><div class="sk rounded-2xl h-52 mb-4"></div><div class="sk h-5 w-3/4 mb-3 rounded-lg"></div><div class="sk h-4 w-full mb-2 rounded-lg"></div><div class="sk h-4 w-1/2 rounded-lg"></div></div>
-    <div class="bg-white rounded-3xl p-4 shadow-sm hidden sm:block"><div class="sk rounded-2xl h-52 mb-4"></div><div class="sk h-5 w-3/4 mb-3 rounded-lg"></div><div class="sk h-4 w-full mb-2 rounded-lg"></div><div class="sk h-4 w-1/2 rounded-lg"></div></div>
-    <div class="bg-white rounded-3xl p-4 shadow-sm hidden lg:block"><div class="sk rounded-2xl h-52 mb-4"></div><div class="sk h-5 w-3/4 mb-3 rounded-lg"></div><div class="sk h-4 w-full mb-2 rounded-lg"></div><div class="sk h-4 w-1/2 rounded-lg"></div></div>
-</div>
-<div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 hidden"></div>
-<div id="empty" class="hidden text-center py-20"><div class="w-20 h-20 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-5"><i data-lucide="cake" class="w-10 h-10 text-brand-400"></i></div><h3 class="text-xl font-serif font-bold text-neutral-900 mb-2">No Cakes Found</h3><p class="text-neutral-500 text-sm">Check back soon!</p></div>
-</div>
-</section>
-
-<div class="divider max-w-5xl mx-auto"></div>
-
-<!-- ═══ PROCESS ═══ -->
-<section id="process" class="py-28 overflow-hidden">
-<div class="max-w-6xl mx-auto px-5 lg:px-8">
-<div class="text-center max-w-2xl mx-auto mb-16">
-    <div class="rv inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-50 text-gold-600 text-[11px] font-bold tracking-[.2em] uppercase mb-5"><i data-lucide="wand-2" class="w-3.5 h-3.5"></i>How It Works</div>
-    <h2 class="rv text-4xl md:text-[3.2rem] font-serif font-bold text-neutral-900 mb-5 leading-tight">From Vision to<br><span class="gt italic">Perfection</span></h2>
-    <div class="rv w-20 h-[3px] bg-gradient-to-r from-gold-400 to-brand-500 mx-auto rounded-full"></div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-    <div class="rv text-center group"><div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"><i data-lucide="message-circle" class="w-7 h-7 text-white"></i></div><div class="text-[10px] font-bold text-brand-500 tracking-[.2em] uppercase mb-2">Step 01</div><h3 class="text-lg font-serif font-bold text-neutral-900 mb-2">Reach Out</h3><p class="text-sm text-neutral-500 leading-relaxed">Contact us via WhatsApp with your cake vision.</p></div>
-    <div class="rv text-center group"><div class="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"><i data-lucide="palette" class="w-7 h-7 text-white"></i></div><div class="text-[10px] font-bold text-gold-500 tracking-[.2em] uppercase mb-2">Step 02</div><h3 class="text-lg font-serif font-bold text-neutral-900 mb-2">We Design</h3><p class="text-sm text-neutral-500 leading-relaxed">Our team creates a custom design just for you.</p></div>
-    <div class="rv text-center group"><div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-gold-500 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"><i data-lucide="chef-hat" class="w-7 h-7 text-white"></i></div><div class="text-[10px] font-bold text-brand-500 tracking-[.2em] uppercase mb-2">Step 03</div><h3 class="text-lg font-serif font-bold text-neutral-900 mb-2">We Bake</h3><p class="text-sm text-neutral-500 leading-relaxed">Handcrafted with premium ingredients & love.</p></div>
-    <div class="rv text-center group"><div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300"><i data-lucide="party-popper" class="w-7 h-7 text-white"></i></div><div class="text-[10px] font-bold text-emerald-500 tracking-[.2em] uppercase mb-2">Step 04</div><h3 class="text-lg font-serif font-bold text-neutral-900 mb-2">Celebrate!</h3><p class="text-sm text-neutral-500 leading-relaxed">Safe delivery & your perfect celebration begins.</p></div>
-</div>
-</div>
-</section>
-
-<!-- ═══ ABOUT ═══ -->
-<section id="about" class="py-28 overflow-hidden bg-gradient-to-b from-cream-50 to-white">
-<div class="max-w-7xl mx-auto px-5 lg:px-8">
-<div class="flex flex-col lg:flex-row items-center gap-16">
-    <div class="w-full lg:w-1/2 rv-l">
-        <div class="relative">
-            <div class="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl group">
-                <img src="https://i.imgur.com/95nNN4Y.png" alt="Didace at work" class="w-full h-[520px] object-cover transition-transform duration-700 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-neutral-900/75 via-transparent to-transparent"></div>
-                <div class="absolute bottom-6 left-6 right-6 text-white">
-                    <div class="flex gap-0.5 mb-2"><i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i><i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i><i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i><i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i><i data-lucide="star" class="w-4 h-4 fill-gold-400 text-gold-400"></i></div>
-                    <h3 class="font-serif text-2xl font-bold">Master Baker Didace</h3>
-                    <p class="text-neutral-300 text-sm mt-1">7+ Years of Culinary Excellence</p>
-                </div>
-            </div>
-            <div class="absolute -bottom-6 -right-6 lg:-right-14 w-44 h-44 md:w-56 md:h-56 rounded-2xl overflow-hidden shadow-xl border-4 border-white z-20 fl-s"><img src="https://i.imgur.com/BLFR0AI.png" alt="" class="w-full h-full object-cover"></div>
-            <div class="absolute -top-6 -left-6 w-24 h-24 border-2 border-brand-200/40 rounded-full -z-10"></div>
+    <!-- SUCCESS SECTION (hidden initially) -->
+    <div id="success">
+        <div class="success-icon">🎉</div>
+        <h2>Thank you, <br><span id="display-name" style="color: #E63946;">Guest</span>!</h2>
+        <p class="msg">We are so excited to share our sweetest creations with you.</p>
+        
+        <div class="redirecting-box">
+            <p>Opening your catalog...</p>
+            <span class="loader"></span>
         </div>
-    </div>
-    <div class="w-full lg:w-1/2 rv-r">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 text-brand-600 text-[11px] font-bold tracking-[.2em] uppercase mb-5"><i data-lucide="chef-hat" class="w-3.5 h-3.5"></i>Our Story</div>
-        <h2 class="text-4xl md:text-5xl font-serif font-bold text-neutral-900 mb-7 leading-tight">A Legacy of<br><span class="gt italic">Sweet Excellence</span></h2>
-        <div class="space-y-5 text-neutral-600 text-[17px] leading-relaxed mb-10">
-            <p>In the heart of Downtown Kigali, <strong class="text-neutral-900">Kigali Cakes Shop</strong> was born from a dream: world-class artisan pastry in Rwanda.</p>
-            <p>Under the guidance of <strong class="text-neutral-900">Master Baker Didace</strong>, our team transforms the finest ingredients into edible masterpieces.</p>
-            <p class="italic text-brand-600 font-serif text-xl border-l-4 border-brand-500 pl-5">"We don't just bake cakes. We create memories that last forever."</p>
-        </div>
-        <div class="grid grid-cols-2 gap-4 mb-10">
-            <div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center shrink-0"><i data-lucide="check" class="w-5 h-5 text-white"></i></div><span class="text-sm font-semibold text-neutral-800">100% Fresh Daily</span></div>
-            <div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-gold-400 to-gold-500 rounded-xl flex items-center justify-center shrink-0"><i data-lucide="check" class="w-5 h-5 text-white"></i></div><span class="text-sm font-semibold text-neutral-800">Premium Ingredients</span></div>
-            <div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-gold-500 rounded-xl flex items-center justify-center shrink-0"><i data-lucide="check" class="w-5 h-5 text-white"></i></div><span class="text-sm font-semibold text-neutral-800">Custom Designs</span></div>
-            <div class="flex items-center gap-3"><div class="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shrink-0"><i data-lucide="check" class="w-5 h-5 text-white"></i></div><span class="text-sm font-semibold text-neutral-800">Safe Delivery</span></div>
-        </div>
-        <button onclick="waOrder('a consultation')" class="cur-h mag glow inline-flex items-center gap-2.5 bg-gradient-to-r from-brand-500 to-gold-500 text-white px-9 py-[18px] rounded-full text-[13px] font-bold tracking-wider uppercase shadow-xl">Start Your Order <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-    </div>
-</div>
-</div>
-</section>
 
-<!-- ═══ REVIEWS ═══ -->
-<section id="reviews" class="py-28 overflow-hidden">
-<div class="max-w-6xl mx-auto px-5 lg:px-8">
-<div class="text-center max-w-2xl mx-auto mb-16">
-    <div class="rv inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-50 text-gold-600 text-[11px] font-bold tracking-[.2em] uppercase mb-5"><i data-lucide="heart" class="w-3.5 h-3.5"></i>Testimonials</div>
-    <h2 class="rv text-4xl md:text-[3.2rem] font-serif font-bold text-neutral-900 mb-5 leading-tight">What Our Clients<br><span class="gt italic">Say About Us</span></h2>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="rv glass rounded-3xl p-7 hover:shadow-xl transition-shadow duration-300">
-        <div class="flex gap-0.5 mb-5"><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i></div>
-        <p class="text-neutral-600 leading-relaxed mb-7 italic text-[15px]">"The wedding cake exceeded every expectation. Every guest was speechless. Didace is a true artist!"</p>
-        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-500 flex items-center justify-center text-white font-bold text-sm">AM</div><div><h4 class="font-bold text-neutral-900 text-sm">Amina M.</h4><p class="text-neutral-400 text-xs">Wedding Client</p></div></div>
+        <a id="download-link" class="manual-link" href="#" target="_blank">Click here if it doesn't open automatically</a>
     </div>
-    <div class="rv glass rounded-3xl p-7 hover:shadow-xl transition-shadow duration-300">
-        <div class="flex gap-0.5 mb-5"><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i></div>
-        <p class="text-neutral-600 leading-relaxed mb-7 italic text-[15px]">"My daughter's birthday cake was absolutely stunning! The detail was incredible. We order every year now."</p>
-        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-500 flex items-center justify-center text-white font-bold text-sm">JK</div><div><h4 class="font-bold text-neutral-900 text-sm">Jean K.</h4><p class="text-neutral-400 text-xs">Loyal Customer</p></div></div>
-    </div>
-    <div class="rv glass rounded-3xl p-7 hover:shadow-xl transition-shadow duration-300">
-        <div class="flex gap-0.5 mb-5"><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i><i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i></div>
-        <p class="text-neutral-600 leading-relaxed mb-7 italic text-[15px]">"Professional, punctual, incredibly talented. The corporate event cake was our celebration's highlight!"</p>
-        <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-gold-500 flex items-center justify-center text-white font-bold text-sm">PM</div><div><h4 class="font-bold text-neutral-900 text-sm">Patrick M.</h4><p class="text-neutral-400 text-xs">Corporate Client</p></div></div>
-    </div>
-</div>
-</div>
-</section>
-
-<!-- ═══ CTA ═══ -->
-<section class="py-28 relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-neutral-900 via-brand-900/30 to-neutral-900"></div>
-<div class="absolute top-1/4 left-1/4 w-80 h-80 bg-brand-500/15 rounded-full blur-[100px]"></div>
-<div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gold-500/15 rounded-full blur-[100px]"></div>
-<div class="max-w-3xl mx-auto px-5 text-center relative z-10">
-    <h2 class="rv text-4xl md:text-5xl font-serif font-bold text-white mb-7 leading-tight">Let's Create Your<br><span class="gt italic">Dream Cake</span></h2>
-    <p class="rv text-neutral-300 text-lg mb-11 font-light">Grand wedding or intimate birthday — we make it unforgettable.</p>
-    <div class="rv flex flex-col sm:flex-row gap-5 justify-center">
-        <button onclick="waOrder('my dream cake')" class="cur-h mag glow inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-brand-500 to-gold-500 text-white px-10 py-[18px] rounded-full text-[13px] font-bold tracking-wider uppercase shadow-2xl"><i data-lucide="message-circle" class="w-5 h-5"></i>Order on WhatsApp</button>
-        <a href="tel:+250788211787" class="cur-h mag inline-flex items-center justify-center gap-2.5 bg-white/10 border border-white/20 text-white px-10 py-[18px] rounded-full text-[13px] font-bold tracking-wider uppercase hover:bg-white/20 transition-colors"><i data-lucide="phone" class="w-5 h-5"></i>Call Now</a>
-    </div>
-</div>
-</section>
-
-<!-- ═══ FOOTER ═══ -->
-<footer class="bg-neutral-900 text-neutral-400 py-16 relative">
-<div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent"></div>
-<div class="max-w-7xl mx-auto px-5 lg:px-8">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
-    <div><div class="flex items-center gap-2.5 mb-5"><div class="bg-gradient-to-br from-brand-500 to-gold-500 p-2.5 rounded-full"><i data-lucide="cake" class="w-5 h-5 text-white"></i></div><div><span class="text-xl font-serif font-bold text-white block leading-none">Kigali Cakes</span><span class="text-[8px] text-brand-400 font-bold tracking-[.2em] uppercase">By Didace</span></div></div><p class="text-sm leading-relaxed mb-5 max-w-xs">Rwanda's premier artisan bakery crafting unforgettable celebrations since 2018.</p><div class="flex gap-3"><a href="#" class="cur-h w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a><a href="#" class="cur-h w-10 h-10 rounded-full bg-neutral-800 flex items-center justify-center hover:bg-brand-500 hover:text-white transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a></div></div>
-    <div><h4 class="text-white font-bold tracking-wider uppercase text-[10px] mb-5">Navigate</h4><ul class="space-y-3 text-sm"><li><a href="#hero" class="hover:text-brand-400 transition-colors">Home</a></li><li><a href="#menu" class="hover:text-brand-400 transition-colors">Collection</a></li><li><a href="#process" class="hover:text-brand-400 transition-colors">Process</a></li><li><a href="#about" class="hover:text-brand-400 transition-colors">About</a></li></ul></div>
-    <div><h4 class="text-white font-bold tracking-wider uppercase text-[10px] mb-5">Hours</h4><ul class="space-y-3 text-sm"><li class="flex justify-between">Mon–Fri <span class="text-white">8AM–8PM</span></li><li class="flex justify-between">Saturday <span class="text-white">9AM–9PM</span></li><li class="flex justify-between">Sunday <span class="text-white">10AM–6PM</span></li></ul></div>
-    <div><h4 class="text-white font-bold tracking-wider uppercase text-[10px] mb-5">Contact</h4><ul class="space-y-3 text-sm"><li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-500 mt-0.5 shrink-0"></i>Downtown Kigali, Rwanda</li><li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 text-brand-500 shrink-0"></i>0788 211 787</li></ul></div>
-</div>
-<div class="border-t border-neutral-800 pt-7 flex flex-col md:flex-row justify-between items-center text-xs"><p>&copy; <span id="yr"></span> Kigali Cakes Shop.</p><p class="mt-3 md:mt-0 flex items-center gap-1.5">Made with <i data-lucide="heart" class="w-3 h-3 text-brand-500 fill-brand-500"></i> in Kigali</p></div>
-</div>
-</footer>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!--            ADMIN PANEL                 -->
-<!-- ═══════════════════════════════════════ -->
-<div id="admin" class="hidden min-h-screen bg-[#fafaf9] relative z-[2]">
-<aside id="sb" class="admin-sb fixed top-0 left-0 h-full w-[240px] bg-[#111] text-white flex flex-col z-[9998] transition-transform duration-300">
-    <div class="p-5 border-b border-white/5 flex items-center gap-2.5"><div class="bg-gradient-to-br from-brand-500 to-gold-500 p-2 rounded-lg"><i data-lucide="cake" class="w-5 h-5 text-white"></i></div><div><span class="font-bold text-sm block">Kigali Cakes</span><span class="text-[9px] text-brand-400 font-semibold tracking-wider">Admin Panel</span></div></div>
-    <nav class="flex-1 p-3 space-y-1">
-        <button onclick="aN('dash',this)" class="sb-link on"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>Dashboard</button>
-        <button onclick="aN('cakes',this)" class="sb-link"><i data-lucide="cake" class="w-4 h-4"></i>Manage Cakes</button>
-    </nav>
-    <div class="p-3 border-t border-white/5 space-y-1">
-        <button onclick="goSite()" class="sb-link"><i data-lucide="external-link" class="w-4 h-4"></i>View Website</button>
-        <button onclick="doLogout()" class="sb-link text-brand-400"><i data-lucide="log-out" class="w-4 h-4"></i>Logout</button>
-    </div>
-</aside>
-<button id="sb-t" class="lg:hidden fixed top-4 left-4 z-[9999] w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center"><i data-lucide="menu" class="w-5 h-5 text-neutral-600"></i></button>
-<main class="admin-mn lg:ml-[240px] min-h-screen">
-<header class="bg-white shadow-sm sticky top-0 z-40 px-6 py-4 flex items-center justify-between">
-    <div><h2 id="a-title" class="text-xl font-serif font-bold text-neutral-900">Dashboard</h2><p class="text-xs text-neutral-500 mt-0.5">Manage your bakery</p></div>
-    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-500 to-gold-500 flex items-center justify-center text-white font-bold text-xs">A</div>
-</header>
-<!-- Dashboard -->
-<section id="pg-dash" class="a-pg p-6 lg:p-8">
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-neutral-100"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 bg-brand-100 rounded-xl flex items-center justify-center"><i data-lucide="cake" class="w-5 h-5 text-brand-600"></i></div></div><h3 class="text-2xl font-bold text-neutral-900" id="d-t">0</h3><p class="text-neutral-500 text-sm">Total Cakes</p></div>
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-neutral-100"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center"><i data-lucide="star" class="w-5 h-5 text-amber-600"></i></div></div><h3 class="text-2xl font-bold text-neutral-900" id="d-f">0</h3><p class="text-neutral-500 text-sm">Featured</p></div>
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-neutral-100"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center"><i data-lucide="banknote" class="w-5 h-5 text-green-600"></i></div></div><h3 class="text-2xl font-bold text-neutral-900" id="d-v">0 RWF</h3><p class="text-neutral-500 text-sm">Catalog Value</p></div>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden"><div class="px-5 py-4 border-b border-neutral-100 flex items-center justify-between"><h3 class="font-bold text-neutral-900 text-sm">Recent Cakes</h3><button onclick="aN('cakes',document.querySelectorAll('.sb-link')[1])" class="text-brand-500 text-xs font-semibold hover:underline">View All →</button></div><div id="d-rec" class="divide-y divide-neutral-50"></div></div>
-</section>
-<!-- Manage Cakes -->
-<section id="pg-cakes" class="a-pg p-6 lg:p-8 hidden">
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-7">
-        <div><h3 class="text-lg font-bold text-neutral-900">All Cakes</h3><p class="text-neutral-500 text-xs">Manage your cake collection</p></div>
-        <button onclick="openCakeM()" class="glow bg-gradient-to-r from-brand-500 to-gold-500 text-white px-5 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg text-sm"><i data-lucide="plus" class="w-4 h-4"></i>Add New Cake</button>
-    </div>
-    <div class="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden">
-        <div class="overflow-x-auto"><table class="at w-full"><thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th class="text-right">Actions</th></tr></thead><tbody id="a-tb"><tr><td colspan="6" class="text-center py-16 text-neutral-400"><i data-lucide="loader-2" class="w-5 h-5 mx-auto animate-spin mb-2"></i><p class="text-xs">Loading...</p></td></tr></tbody></table></div>
-    </div>
-</section>
-</main>
-</div>
-
-<!-- ═══ LOGIN MODAL ═══ -->
-<div id="m-login" class="fixed inset-0 z-[99999] hidden">
-<div class="m-bg absolute inset-0" onclick="closeLogin()"></div>
-<div class="relative min-h-screen flex items-center justify-center p-4">
-<div id="b-login" class="m-box bg-white rounded-3xl shadow-2xl w-full max-w-[380px] p-7 relative z-10">
-    <button onclick="closeLogin()" class="absolute top-4 right-4 p-1.5 text-neutral-400 hover:text-neutral-700 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
-    <div class="text-center mb-7"><div class="w-14 h-14 bg-gradient-to-br from-brand-500 to-gold-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"><i data-lucide="shield-check" class="w-7 h-7 text-white"></i></div><h2 class="text-xl font-serif font-bold text-neutral-900">Admin Access</h2><p class="text-neutral-400 text-sm mt-1">Secure management dashboard</p></div>
-    <div id="l-err" class="hidden mb-4 p-3 rounded-xl bg-red-50 text-red-600 text-sm font-medium flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i><span>Invalid credentials. Please try again.</span></div>
-    <form onsubmit="doLogin(event)" class="space-y-4">
-        <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Email</label><input type="email" id="l-e" class="fi" placeholder="your@email.com" required></div>
-        <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Password</label><div class="relative"><input type="password" id="l-p" class="fi pr-11" placeholder="••••••••" required><button type="button" onclick="togPw()" class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"><i data-lucide="eye" class="w-4 h-4" id="pw-ico"></i></button></div></div>
-        <button type="submit" id="l-btn" class="glow w-full bg-gradient-to-r from-brand-500 to-gold-500 text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg text-sm disabled:opacity-50"><span id="l-txt">Sign In</span><i data-lucide="arrow-right" class="w-4 h-4" id="l-ar"></i><i data-lucide="loader-2" class="w-4 h-4 animate-spin hidden" id="l-sp"></i></button>
-    </form>
-</div>
-</div>
-</div>
-
-<!-- ═══ CAKE MODAL ═══ -->
-<div id="m-cake" class="fixed inset-0 z-[99999] hidden">
-<div class="m-bg absolute inset-0" onclick="closeCakeM()"></div>
-<div class="relative min-h-screen flex items-center justify-center p-4">
-<div id="b-cake" class="m-box bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto relative z-10">
-    <div class="sticky top-0 bg-white px-7 py-5 border-b border-neutral-100 flex items-center justify-between z-10 rounded-t-3xl"><h2 id="cm-t" class="text-lg font-serif font-bold text-neutral-900">Add New Cake</h2><button onclick="closeCakeM()" class="p-1.5 text-neutral-400 hover:text-neutral-700 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button></div>
-    <form onsubmit="doSave(event)" class="p-7 space-y-5"><input type="hidden" id="cm-id">
-        <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Image URL *</label><input type="url" id="cm-img" class="fi" placeholder="https://i.imgur.com/example.png" required oninput="prvImg(this.value)"><div id="cm-prv" class="mt-3 rounded-xl overflow-hidden bg-neutral-100 h-40 hidden"><img id="cm-pi" class="w-full h-full object-cover"></div></div>
-        <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Cake Name *</label><input type="text" id="cm-nm" class="fi" placeholder="e.g., Red Velvet Heart" required></div>
-        <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Description</label><textarea id="cm-ds" class="fi" rows="2" placeholder="Describe this masterpiece..."></textarea></div>
-        <div class="grid grid-cols-2 gap-4">
-            <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Category *</label><select id="cm-ct" class="fi" required><option value="">Select...</option><option value="wedding">Wedding</option><option value="birthday">Birthday</option><option value="custom">Custom</option></select></div>
-            <div><label class="block text-xs font-semibold text-neutral-600 mb-1.5 uppercase tracking-wider">Price (RWF) *</label><input type="number" id="cm-pr" class="fi" placeholder="25000" min="0" required></div>
-        </div>
-        <div class="flex flex-wrap gap-6">
-            <label class="flex items-center gap-2.5 cursor-pointer"><input type="checkbox" id="cm-ac" checked class="w-4 h-4 rounded border-neutral-300 text-brand-500 focus:ring-brand-400"><span class="text-sm font-medium text-neutral-700">Active</span></label>
-            <label class="flex items-center gap-2.5 cursor-pointer"><input type="checkbox" id="cm-ft" class="w-4 h-4 rounded border-neutral-300 text-brand-500 focus:ring-brand-400"><span class="text-sm font-medium text-neutral-700">Featured</span></label>
-        </div>
-        <div class="flex gap-3 pt-3"><button type="button" onclick="closeCakeM()" class="flex-1 py-3.5 rounded-xl border-2 border-neutral-200 text-neutral-600 font-semibold hover:bg-neutral-50 transition-colors text-sm">Cancel</button><button type="submit" id="cm-btn" class="flex-1 glow py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-gold-500 text-white font-bold shadow-lg text-sm flex items-center justify-center gap-2 disabled:opacity-50"><i data-lucide="save" class="w-4 h-4"></i><span id="cm-bt">Save Cake</span></button></div>
-    </form>
-</div>
-</div>
-</div>
-
-<!-- ═══ DELETE MODAL ═══ -->
-<div id="m-del" class="fixed inset-0 z-[99999] hidden">
-<div class="m-bg absolute inset-0" onclick="closeDel()"></div>
-<div class="relative min-h-screen flex items-center justify-center p-4">
-<div id="b-del" class="m-box bg-white rounded-3xl shadow-2xl w-full max-w-xs p-7 text-center relative z-10">
-    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="trash-2" class="w-7 h-7 text-red-500"></i></div>
-    <h3 class="text-lg font-bold text-neutral-900 mb-2">Delete this cake?</h3>
-    <p class="text-neutral-500 text-sm mb-6">This action cannot be undone.</p>
-    <div class="flex gap-3"><button onclick="closeDel()" class="flex-1 py-3 rounded-xl border-2 border-neutral-200 text-neutral-600 font-semibold text-sm hover:bg-neutral-50 transition-colors">Cancel</button><button onclick="doDel()" class="flex-1 py-3 rounded-xl bg-red-500 text-white font-bold text-sm shadow-lg hover:bg-red-600 transition-colors">Delete</button></div>
-</div>
-</div>
-</div>
-
-<!-- WhatsApp Float -->
-<div class="fixed bottom-7 right-7 z-[9000]" id="wa-f">
-<button onclick="waOrder('from your website')" class="w-[56px] h-[56px] rounded-full bg-gradient-to-br from-[#25d366] to-[#128c7e] shadow-[0_8px_28px_rgba(37,211,102,.4)] flex items-center justify-center hover:scale-110 transition-transform cursor-pointer relative">
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    <span class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-brand-500 rounded-full animate-ping"></span>
-</button>
 </div>
 
 <script>
-// ═══════ SUPABASE ═══════
-const S=window.supabase.createClient('https://gwcoxztfhsemzqlxqyfx.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3Y294enRmaHNlbXpxbHhxeWZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MjUyOTcsImV4cCI6MjA4OTIwMTI5N30.okKGILHrCTXWx2TO17rpSWyfi-hN5uyPerLPchuDYTU');
+// The PDF link
+const PDF_URL = 'https://attachments.convertkitcdnn2.com/362369/7f7307ea-2d63-4b9a-8012-50d9e613a6f5/kigali-cake-shop-0788211787-birthdays-cakes-prices.pdf?utm_campaign=Landing%20Page%20or%20Form%20-%202551518&utm_medium=email&utm_source=convertkit';
 
-// ═══════ STATE ═══════
-let cakes=[],delId=null,editId=null;
-const DEF=[
-{name:"Red Velvet Heart",price:25000,image_url:"https://i.imgur.com/992fznL.png",description:"Heart-shaped red velvet perfection for romantic celebrations.",category:"custom",is_active:true,is_featured:false},
-{name:"Rainbow Strawberry",price:20000,image_url:"https://i.imgur.com/PsaW2ko.png",description:"Colorful layers topped with fresh premium strawberries.",category:"birthday",is_active:true,is_featured:false},
-{name:"Golden Chocolate",price:25000,image_url:"https://i.imgur.com/q9tCm5P.png",description:"Rich chocolate with elegant golden accents and strawberries.",category:"birthday",is_active:true,is_featured:false},
-{name:"Hummingbird Cheesecake",price:17000,image_url:"https://i.imgur.com/gJr145V.png",description:"Delightful blend of fruits and rich cream cheese.",category:"custom",is_active:true,is_featured:false},
-{name:"Floral Elegance",price:35000,image_url:"https://i.imgur.com/BLFR0AI.png",description:"Beautiful floral designs for elegant occasions.",category:"wedding",is_active:true,is_featured:false},
-{name:"Grand Celebration",price:250000,image_url:"https://i.imgur.com/s1DEUyt.png",description:"Multi-tier masterpiece for grand events.",category:"wedding",is_active:true,is_featured:true},
-{name:"Wedding Masterpiece",price:650000,image_url:"https://i.imgur.com/ciV7QDf.png",description:"The ultimate luxury wedding cake experience.",category:"wedding",is_active:true,is_featured:true}
-];
-
-// ═══════ INIT ═══════
-document.addEventListener('DOMContentLoaded',async()=>{
-    lucide.createIcons();
-    document.getElementById('yr').textContent=new Date().getFullYear();
-    setupUI();
-    await loadData();
-    preloaderDone();
-    S.channel('r').on('postgres_changes',{event:'*',schema:'public',table:'cakes'},()=>{loadData();if(!$('admin').classList.contains('hidden'))aTable()}).subscribe();
-});
-
-// ═══════ PRELOADER ═══════
-function preloaderDone(){
-    let p=0;const b=$('pl-bar'),pl=$('preloader');
-    const iv=setInterval(()=>{p+=Math.random()*18;if(p>=100){p=100;clearInterval(iv);setTimeout(()=>{pl.classList.add('out');setTimeout(()=>{pl.style.display='none';runReveal()},900)},300)}b.style.width=p+'%'},80);
-}
-
-// ═══════ LOAD DATA ═══════
-async function loadData(){
-    try{
-        const{data,error}=await S.from('cakes').select('*').order('created_at',{ascending:false});
-        if(error)throw error;
-        cakes=data&&data.length?data:[];
-        if(!cakes.length){const{data:s}=await S.from('cakes').insert(DEF).select();cakes=s||DEF.map((c,i)=>({id:i+1,...c}))}
-    }catch(e){console.warn('DB fallback:',e.message);cakes=DEF.map((c,i)=>({id:i+1,...c}))}
-    render();
-}
-
-// ═══════ RENDER PUBLIC ═══════
-function render(f='all'){
-    $('sk-g').classList.add('hidden');
-    const ac=cakes.filter(c=>c.is_active!==false);
-    const ls=f==='all'?ac:ac.filter(c=>c.category===f);
-    const g=$('grid'),em=$('empty');
-    if(!ls.length){g.classList.add('hidden');em.classList.remove('hidden');return}
-    em.classList.add('hidden');g.classList.remove('hidden');g.innerHTML='';
-    ls.forEach((c,i)=>{
-        const d=document.createElement('div');d.className='ck cursor-pointer';d.onclick=()=>waOrder(c.name);
-        d.innerHTML=`<div class="bg-white rounded-3xl p-3.5 pb-5 shadow-md hover:shadow-2xl border border-neutral-100/50 h-full flex flex-col relative overflow-hidden group transition-all duration-500">
-${c.is_featured?'<div class="absolute top-5 left-5 z-20 px-3 py-1.5 bg-gradient-to-r from-brand-500 to-gold-500 text-white text-[9px] font-bold tracking-wider uppercase rounded-full shadow-lg flex items-center gap-1"><i data-lucide="sparkles" class="w-3 h-3"></i>Featured</div>':''}
-<div class="absolute top-5 right-5 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-3 group-hover:translate-y-0"><span class="bg-neutral-900 text-white p-2.5 rounded-full shadow-lg flex items-center justify-center"><i data-lucide="shopping-bag" class="w-4 h-4"></i></span></div>
-<div class="rounded-2xl overflow-hidden mb-5 relative bg-neutral-100 aspect-[4/3]"><img src="${c.image_url}" alt="${c.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='https://placehold.co/400x300/fff0f3/ff3a6e?text=🎂'"><div class="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div></div>
-<div class="px-1.5 flex flex-col flex-grow">
-<h3 class="text-[17px] font-serif font-bold text-neutral-900 leading-snug group-hover:text-brand-500 transition-colors mb-1.5">${c.name}</h3>
-<p class="text-[13px] text-neutral-500 font-light mb-5 flex-grow leading-relaxed line-clamp-2">${c.description||''}</p>
-<div class="flex items-end justify-between pt-3 border-t border-neutral-100/70 mt-auto">
-<div><span class="text-[9px] text-neutral-400 uppercase tracking-widest font-bold block mb-0.5">Price</span><span class="text-xl font-bold text-neutral-900">${fp(c.price)} <span class="text-[11px] text-brand-500 font-bold">RWF</span></span></div>
-<span class="flex items-center gap-1 text-brand-500 text-[11px] font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all translate-x-3 group-hover:translate-x-0 duration-300">Order <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
-</div></div></div>`;g.appendChild(d)});
-    lucide.createIcons();
-    const ft=cakes.find(c=>c.is_featured&&c.is_active!==false)||cakes[0];
-    if(ft)$('hero-img').src=ft.image_url;
-    const sc=$('st-count');if(sc)sc.dataset.to=ac.length;
-    gsap.from('.ck',{y:40,opacity:0,duration:.55,stagger:.07,ease:'power3.out',clearProps:'all'});
-}
-
-// ═══════ ADMIN TABLE ═══════
-async function aTable(){
-    let ls=[];try{const{data,error}=await S.from('cakes').select('*').order('created_at',{ascending:false});if(error)throw error;ls=data||[]}catch(e){ls=cakes}
-    const tb=$('a-tb');
-    if(!ls.length){tb.innerHTML='<tr><td colspan="6" class="text-center py-16 text-neutral-400 text-sm">No cakes yet.</td></tr>';lucide.createIcons();return}
-    tb.innerHTML=ls.map(c=>`<tr>
-<td><div class="w-14 h-14 rounded-xl overflow-hidden bg-neutral-100 shadow-sm"><img src="${c.image_url}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100/fff0f3/ff3a6e?text=🎂'"></div></td>
-<td><div class="font-semibold text-neutral-900">${c.name}</div><div class="text-[11px] text-neutral-400 max-w-[180px] truncate">${c.description||''}</div></td>
-<td><span class="px-2.5 py-1 rounded-full text-[10px] font-bold capitalize tracking-wider ${c.category==='wedding'?'bg-purple-100 text-purple-700':c.category==='birthday'?'bg-blue-100 text-blue-700':'bg-neutral-100 text-neutral-600'}">${c.category||'—'}</span></td>
-<td class="font-bold text-neutral-900">${fp(c.price)} <span class="text-[10px] text-neutral-400 font-normal">RWF</span></td>
-<td><div class="flex flex-col gap-1">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider ${c.is_active?'bg-emerald-100 text-emerald-700':'bg-neutral-100 text-neutral-500'}">${c.is_active?'Active':'Hidden'}</span>
-${c.is_featured?'<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700">★ Featured</span>':''}
-</div></td>
-<td><div class="flex items-center justify-end gap-1">
-<button onclick="editCk(${c.id})" class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors" title="Edit"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
-<button onclick="togF(${c.id},'is_active',${!c.is_active})" class="p-2 ${c.is_active?'text-amber-500 hover:bg-amber-50':'text-emerald-500 hover:bg-emerald-50'} rounded-lg transition-colors" title="${c.is_active?'Hide':'Show'}"><i data-lucide="${c.is_active?'eye-off':'eye'}" class="w-3.5 h-3.5"></i></button>
-<button onclick="togF(${c.id},'is_featured',${!c.is_featured})" class="p-2 ${c.is_featured?'text-amber-500':'text-neutral-300'} hover:bg-neutral-50 rounded-lg transition-colors" title="${c.is_featured?'Unfeature':'Feature'}"><i data-lucide="star" class="w-3.5 h-3.5 ${c.is_featured?'fill-amber-400':''}"></i></button>
-<button onclick="askDel(${c.id})" class="p-2 text-red-400 hover:bg-red-50 rounded-lg transition-colors" title="Delete"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-</div></td></tr>`).join('');
-    lucide.createIcons();
-    $('d-t').textContent=ls.length;$('d-f').textContent=ls.filter(c=>c.is_featured).length;
-    $('d-v').textContent=fp(ls.reduce((s,c)=>s+(c.price||0),0))+' RWF';
-    $('d-rec').innerHTML=ls.slice(0,5).map(c=>`<div class="flex items-center gap-3 px-5 py-3 hover:bg-brand-50/40 transition-colors">
-<div class="w-10 h-10 rounded-xl overflow-hidden bg-neutral-100 shrink-0"><img src="${c.image_url}" class="w-full h-full object-cover"></div>
-<div class="flex-1 min-w-0"><h4 class="font-semibold text-neutral-900 text-sm truncate">${c.name}</h4><p class="text-[11px] text-neutral-400 capitalize">${c.category||''}</p></div>
-<span class="font-bold text-neutral-900 text-sm">${fp(c.price)}<span class="text-neutral-400 text-[10px] font-normal ml-1">RWF</span></span></div>`).join('');
-}
-
-// ═══════ CRUD ═══════
-async function doSave(e){
-    e.preventDefault();const btn=$('cm-btn');btn.disabled=true;$('cm-bt').textContent='Saving...';
-    const p={name:$('cm-nm').value.trim(),description:$('cm-ds').value.trim(),category:$('cm-ct').value,price:parseInt($('cm-pr').value)||0,image_url:$('cm-img').value.trim()||'https://placehold.co/400x300/fff0f3/ff3a6e?text=🎂',is_active:$('cm-ac').checked,is_featured:$('cm-ft').checked};
-    try{if(editId){const{error}=await S.from('cakes').update(p).eq('id',editId);if(error)throw error;toast('Cake updated!','success')}else{const{error}=await S.from('cakes').insert([p]);if(error)throw error;toast('Cake added!','success')}closeCakeM();await loadData();await aTable()}catch(er){toast('Error: '+er.message,'error')}
-    btn.disabled=false;$('cm-bt').textContent=editId?'Update':'Save Cake';
-}
-async function editCk(id){
-    editId=id;let c;try{const{data,error}=await S.from('cakes').select('*').eq('id',id).single();if(error)throw error;c=data}catch(e){c=cakes.find(x=>x.id===id)}
-    if(!c){toast('Not found','error');return}
-    $('cm-t').textContent='Edit Cake';$('cm-bt').textContent='Update';$('cm-id').value=c.id;$('cm-nm').value=c.name||'';$('cm-ds').value=c.description||'';$('cm-ct').value=c.category||'';$('cm-pr').value=c.price||'';$('cm-img').value=c.image_url||'';$('cm-ac').checked=c.is_active!==false;$('cm-ft').checked=!!c.is_featured;
-    prvImg(c.image_url);oM('m-cake','b-cake');
-}
-async function togF(id,f,v){try{const{error}=await S.from('cakes').update({[f]:v}).eq('id',id);if(error)throw error;toast('Updated!','success');await loadData();await aTable()}catch(e){toast('Error: '+e.message,'error')}}
-function askDel(id){delId=id;oM('m-del','b-del')}
-function closeDel(){cM('m-del','b-del');delId=null}
-async function doDel(){if(!delId)return;try{const{error}=await S.from('cakes').delete().eq('id',delId);if(error)throw error;toast('Deleted!','success');closeDel();await loadData();await aTable()}catch(e){toast('Error: '+e.message,'error')}}
-
-// ═══════ MODALS ═══════
-function oM(m,b){$(m).classList.remove('hidden');requestAnimationFrame(()=>$(b).classList.add('on'));lucide.createIcons()}
-function cM(m,b){$(b).classList.remove('on');setTimeout(()=>$(m).classList.add('hidden'),400)}
-function openLogin(){$('l-err').classList.add('hidden');$('l-e').value='';$('l-p').value='';oM('m-login','b-login');closeMob()}
-function closeLogin(){cM('m-login','b-login')}
-function openCakeM(){editId=null;$('cm-t').textContent='Add New Cake';$('cm-bt').textContent='Save Cake';['cm-id','cm-nm','cm-ds','cm-ct','cm-pr','cm-img'].forEach(x=>$(x).value='');$('cm-ac').checked=true;$('cm-ft').checked=false;$('cm-prv').classList.add('hidden');oM('m-cake','b-cake')}
-function closeCakeM(){cM('m-cake','b-cake')}
-function prvImg(u){const w=$('cm-prv'),i=$('cm-pi');if(u&&u.startsWith('http')){i.src=u;w.classList.remove('hidden');i.onerror=()=>w.classList.add('hidden')}else w.classList.add('hidden')}
-function togPw(){const i=$('l-p'),ic=$('pw-ico');if(i.type==='password'){i.type='text';ic.setAttribute('data-lucide','eye-off')}else{i.type='password';ic.setAttribute('data-lucide','eye')}lucide.createIcons()}
-
-// ═══════ AUTH ═══════
-function doLogin(e){
-    e.preventDefault();const em=$('l-e').value.trim(),pw=$('l-p').value;
-    $('l-ar').classList.add('hidden');$('l-sp').classList.remove('hidden');$('l-txt').textContent='Signing in...';$('l-btn').disabled=true;
-    setTimeout(()=>{
-        if(em==='admin@kigalicakes.rw'&&pw==='admin123'){localStorage.setItem('kca','1');closeLogin();goAdmin();toast('Welcome back!','success')}
-        else{$('l-err').classList.remove('hidden');toast('Invalid credentials','error')}
-        $('l-ar').classList.remove('hidden');$('l-sp').classList.add('hidden');$('l-txt').textContent='Sign In';$('l-btn').disabled=false;
-    },700);
-}
-function goAdmin(){$('site').classList.add('hidden');$('admin').classList.remove('hidden');$('wa-f').classList.add('hidden');aTable();lucide.createIcons()}
-function goSite(){$('admin').classList.add('hidden');$('site').classList.remove('hidden');$('wa-f').classList.remove('hidden');loadData()}
-function doLogout(){localStorage.removeItem('kca');goSite();toast('Logged out','success')}
-function aN(pg,el){document.querySelectorAll('.a-pg').forEach(s=>s.classList.add('hidden'));$('pg-'+pg).classList.remove('hidden');document.querySelectorAll('.sb-link').forEach(b=>b.classList.remove('on'));if(el)el.classList.add('on');$('a-title').textContent={dash:'Dashboard',cakes:'Manage Cakes'}[pg]||'';if(pg==='cakes')aTable();if(pg==='dash')aTable()}
-
-// ═══════ WHATSAPP ═══════
-function waOrder(x){window.open(`https://wa.me/250788211787?text=${encodeURIComponent(`Hello Didace! ✨ I'd like to order ${x} from Kigali Cakes Shop. Can we discuss?`)}`,'_blank')}
-
-// ═══════ TOAST ═══════
-function toast(m,t='info'){
-    const c={success:'bg-emerald-500',error:'bg-red-500',info:'bg-blue-500',warning:'bg-amber-500'};
-    const ic={success:'check-circle',error:'x-circle',info:'info',warning:'alert-triangle'};
-    const el=document.createElement('div');el.className=`t-in flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl ${c[t]} text-white text-sm font-medium pointer-events-auto`;
-    el.innerHTML=`<i data-lucide="${ic[t]}" class="w-4 h-4 shrink-0"></i>${m}`;$('toasts').appendChild(el);lucide.createIcons();
-    setTimeout(()=>{el.classList.remove('t-in');el.classList.add('t-out');setTimeout(()=>el.remove(),300)},3000);
-}
-
-// ═══════ UTILS ═══════
-function $(id){return document.getElementById(id)}
-function fp(n){return new Intl.NumberFormat('en-US').format(n||0)}
-
-// ═══════ UI SETUP ═══════
-function setupUI(){
-    // Cursor
-    const cr=$('cur'),cd=$('curd');let cx=0,cy=0,dx=0,dy=0;
-    document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cr.style.left=cx+'px';cr.style.top=cy+'px'});
-    (function lp(){dx+=(cx-dx)*.12;dy+=(cy-dy)*.12;cd.style.left=dx+'px';cd.style.top=dy+'px';requestAnimationFrame(lp)})();
-    document.addEventListener('mousedown',()=>cr.classList.add('big'));document.addEventListener('mouseup',()=>cr.classList.remove('big'));
-    document.querySelectorAll('a,button,.cur-h,.ck').forEach(el=>{el.addEventListener('mouseenter',()=>cr.classList.add('big'));el.addEventListener('mouseleave',()=>cr.classList.remove('big'))});
-
-    // Scroll progress
-    window.addEventListener('scroll',()=>{$('scroll-prog').style.transform=`scaleX(${window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)})`});
-
-    // Navbar
-    window.addEventListener('scroll',()=>{const n=$('nav');if(window.scrollY>50){n.classList.add('glass','shadow-md')}else{n.classList.remove('glass','shadow-md');n.style.background=''}});
-
-    // Mobile menu
-    $('ham-btn').addEventListener('click',togMob);
-    document.querySelectorAll('.mob-l').forEach(a=>a.addEventListener('click',closeMob));
-
-    // Filters
-    const fb=$('fbar');
-    ['all','wedding','birthday','custom'].forEach(f=>{
-        const b=document.createElement('button');b.className='px-5 py-2.5 rounded-full text-[12px] font-semibold border-[1.5px] transition-all duration-200 cursor-pointer '+(f==='all'?'bg-neutral-900 text-white border-neutral-900':'bg-white text-neutral-500 border-neutral-200 hover:border-brand-300 hover:text-brand-500');
-        b.textContent=f==='all'?'All Cakes':f.charAt(0).toUpperCase()+f.slice(1);b.dataset.f=f;
-        b.onclick=()=>{fb.querySelectorAll('button').forEach(x=>{x.className='px-5 py-2.5 rounded-full text-[12px] font-semibold border-[1.5px] transition-all duration-200 cursor-pointer bg-white text-neutral-500 border-neutral-200 hover:border-brand-300 hover:text-brand-500'});b.className='px-5 py-2.5 rounded-full text-[12px] font-semibold border-[1.5px] transition-all duration-200 cursor-pointer bg-neutral-900 text-white border-neutral-900';render(f)};
-        fb.appendChild(b);
-    });
-
-    // Admin sidebar toggle
-    $('sb-t')?.addEventListener('click',()=>$('sb').classList.toggle('open'));
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})}));
-
-    // Magnetic buttons
-    document.querySelectorAll('.mag').forEach(b=>{
-        b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.18}px)`});
-        b.addEventListener('mouseleave',()=>{b.style.transform=''});
-    });
-
-    // Particles
-    setupParticles();
-}
-
-let mobOpen=false;
-function togMob(){mobOpen=!mobOpen;const m=$('mob'),h=$('ham').children;if(mobOpen){m.classList.remove('translate-x-full');h[0].style.transform='rotate(45deg) translate(4px,4px)';h[1].style.opacity='0';h[2].style.transform='rotate(-45deg) translate(4px,-4px)';document.body.style.overflow='hidden'}else closeMob()}
-function closeMob(){mobOpen=false;$('mob').classList.add('translate-x-full');const h=$('ham').children;h[0].style.transform='';h[1].style.opacity='';h[2].style.transform='';document.body.style.overflow=''}
-
-// ═══════ GSAP REVEALS ═══════
-function runReveal(){
-    gsap.registerPlugin(ScrollTrigger);
-    document.querySelectorAll('.rv,.rv-l,.rv-r,.rv-s').forEach(el=>{
-        gsap.to(el,{scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'},opacity:1,x:0,y:0,scale:1,duration:.7,ease:'power3.out'});
-    });
-    // Counters
-    document.querySelectorAll('.cnt').forEach(el=>{
-        const to=parseInt(el.dataset.to)||0;
-        gsap.to({v:0},{v:to,duration:2,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'},onUpdate:function(){el.textContent=Math.round(this.targets()[0].v)+(el.closest('[data-to]')?' ':'')}});
-    });
-}
-
-// ═══════ PARTICLES ═══════
-function setupParticles(){
-    const cv=$('ptc'),cx=cv.getContext('2d');let w,h;
-    function sz(){w=cv.width=window.innerWidth;h=cv.height=window.innerHeight}sz();window.addEventListener('resize',sz);
-    const pts=[];for(let i=0;i<40;i++)pts.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,sx:(Math.random()-.5)*.3,sy:(Math.random()-.5)*.3,o:Math.random()*.35+.1});
-    (function d(){cx.clearRect(0,0,w,h);pts.forEach(p=>{p.x+=p.sx;p.y+=p.sy;if(p.x<0||p.x>w)p.sx*=-1;if(p.y<0||p.y>h)p.sy*=-1;cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(255,58,110,${p.o})`;cx.fill()});requestAnimationFrame(d)})();
-}
-</script>
-
-<!--
-═══════════════════════════════════════════════
-  RUN THIS SQL IN SUPABASE SQL EDITOR (ONCE):
-═══════════════════════════════════════════════
-
-CREATE TABLE IF NOT EXISTS public.cakes (
-    id BIGSERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    description TEXT DEFAULT '',
-    price INTEGER NOT NULL DEFAULT 0,
-    image_url TEXT DEFAULT '',
-    category TEXT DEFAULT 'custom',
-    is_active BOOLEAN DEFAULT true,
-    is_featured BOOLEAN DEFAULT false,
-    created_at TIMESTAMPTZ DEFAULT now(),
-    updated_at TIMESTAMPTZ DEFAULT now()
+// Database connection
+const dbClient = window.supabase.createClient(
+    'https://gwcoxztfhsemzqlxqyfx.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3Y294enRmaHNlbXpxbHhxeWZ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MjUyOTcsImV4cCI6MjA4OTIwMTI5N30.okKGILHrCTXWx2TO17rpSWyfi-hN5uyPerLPchuDYTU'
 );
 
-ALTER TABLE public.cakes ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "read" ON public.cakes FOR SELECT USING (true);
-CREATE POLICY "insert" ON public.cakes FOR INSERT WITH CHECK (true);
-CREATE POLICY "update" ON public.cakes FOR UPDATE USING (true);
-CREATE POLICY "delete" ON public.cakes FOR DELETE USING (true);
-ALTER TABLE public.cakes REPLICA IDENTITY FULL;
+async function handleSubmit(e) {
+    e.preventDefault();
 
-INSERT INTO public.cakes (name, description, price, image_url, category, is_active, is_featured) VALUES
-('Red Velvet Heart','Heart-shaped red velvet perfection for romantic celebrations.',25000,'https://i.imgur.com/992fznL.png','custom',true,false),
-('Rainbow Strawberry','Colorful layers topped with fresh premium strawberries.',20000,'https://i.imgur.com/PsaW2ko.png','birthday',true,false),
-('Golden Chocolate','Rich chocolate with elegant golden accents and strawberries.',25000,'https://i.imgur.com/q9tCm5P.png','birthday',true,false),
-('Hummingbird Cheesecake','Delightful blend of fruits and rich cream cheese.',17000,'https://i.imgur.com/gJr145V.png','custom',true,false),
-('Floral Elegance','Beautiful floral designs for elegant occasions.',35000,'https://i.imgur.com/BLFR0AI.png','wedding',true,false),
-('Grand Celebration','Multi-tier masterpiece for grand events.',250000,'https://i.imgur.com/s1DEUyt.png','wedding',true,true),
-('Wedding Masterpiece','The ultimate luxury wedding cake experience.',650000,'https://i.imgur.com/ciV7QDf.png','wedding',true,true);
--->
+    const fullName = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const btn = document.getElementById('btn');
+    const btnText = document.getElementById('btn-text');
+    const errorDiv = document.getElementById('error');
+
+    errorDiv.style.display = 'none';
+
+    if (!fullName || !email) {
+        errorDiv.textContent = 'Please fill in both your name and email.';
+        errorDiv.style.display = 'block';
+        return;
+    }
+
+    btn.disabled = true;
+    btnText.textContent = 'Preparing your menu...';
+
+    // 1. Save data to Supabase silently in background
+    try {
+        await dbClient.from('leads').insert([{ name: fullName, email: email }]);
+    } catch (err) {
+        console.error('Database save skipped:', err);
+    }
+
+    // 2. Format name to sound friendly (Get just the first name)
+    const firstName = fullName.split(' ')[0];
+    const formattedName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+    
+    // Update the success text
+    document.getElementById('display-name').textContent = formattedName;
+    document.getElementById('download-link').href = PDF_URL;
+
+    // 3. Switch interface
+    document.getElementById('form-section').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+    
+    // 4. Wait 2.5 seconds, then take them straight to the PDF
+    setTimeout(() => {
+        window.location.href = PDF_URL;
+    }, 2500);
+}
+</script>
 </body>
 </html>
